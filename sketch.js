@@ -1,13 +1,16 @@
 // p5.prototype.VERSION 2.1.1
+
+//color palette: vintage coral scheme
 let table;
 let h;
 let s;
 let b;
 
 async function setup() {
-    const canvas = createCanvas(1000, 700, WEBGL);
+    const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
     angleMode(DEGREES);
+    // to load table from colors.csv and catch errors if the table is not loaded
     try {
         table = await loadTable('colors.csv', {
             delimiter: ',',
@@ -19,11 +22,11 @@ async function setup() {
     }
     //color pallete in HSB
     colorMode(HSB, 360, 100, 100);
-    palette = 0;
-    getColor(1);
-    fill(h,s,b);
-    stroke(h, s, b);
-    strokeWeight(4);
+    palette = 1;
+    getColor(3);
+
+    // stroke('white');
+    // strokeWeight(4);
 }
 
 //to get color from color palette
@@ -34,8 +37,10 @@ function getColor(col) {
 }
 
 function draw() {
-    background(235, 20, 100, 128);
+    background(h, s, b);
     orbitControl();
+    //temporarily make the neutron source white
+    fill(255);
     //draw the vertex counter clockwise starting from the bottom
     beginShape();
     vertex(220, -20);
@@ -58,14 +63,5 @@ function draw() {
     ellipse(340, -80, 50, 160);
     ellipse(370, -80, 40, 140);
     pop();
-
-    // translate(360, -65, 0)
-    // beginShape(POINTS);
-    // for(let i = 0; i < 360; i += 1) {
-    //     let x = cos(i) * 100;
-    //     let y = sin(i) * 100;
-    //     vertex(x, y);
-    // }
-    // endShape();
 
 }

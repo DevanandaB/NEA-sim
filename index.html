@@ -14,12 +14,14 @@
     <script src="js/addons/p5.sound.min.js"></script>
 </head>
 <body>
-    <div id="sim-container">
-        <div id="containment-vessel"></div>
-        <div id="electron-gun"></div>
+    <div class="navbar">
+        <h1>Nuclear chain reaction simulation</h1>
     </div>
 
-    <div class="controls-container">
+    <div id="main-container">
+        <div id="sim-container"></div>
+
+        <div class="controls-container">
         <div class="controls-1">
             <button class="play-btn"><i class="fa-solid fa-play"></i></button>
             <button class="pause-btn"><i class="fa-solid fa-pause"></i></button>
@@ -28,24 +30,24 @@
         </div>
         
         <div class="controls-2">
-            <p>No of nuclei: </p>
+            <div> No of nuclei: <div class="box"></div> </div>
             <input type="range" min="0" max="20" value="1" class="slider" id="nuclei-no">
-            <p>Neutron Speed: </p>
+            <div> Neutron Speed: <div class="box"> </div> </div>
             <input type="range" min="5" max="20" value="10" class="slider" id="speed">
-            <div class="fissioned-percentage">Fissioned: </div>
         </div>
 
         <div class="controls-3">
-            <div class="probabilty"></div>
-            <div class="energy"></div>
-            <div class="isotpes"></div>
-            <input type="checkbox" id="graph" name="graph">
-            <label for="graph">Graph</label>
+            <div>
+                <div style="padding-right:10px;" class="fissioned-percentage">Fissioned: <div class="box"></div> </div>
+                <div class="probabilty">Probabilty of reaction: <div class="box"></div> </div>
+            </div>
+            <div> Uranium-238: <div class="box"></div> </div>
+            <input type="range" min="0" max="20" value="0" class="slider" id="isotope">
+            <label for="graph"> Energy Graph 
+            <input type="checkbox" id="graph" name="graph"></label>
         </div>
-        
+        </div>
     </div>
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
     <script src="sketch.js"></script>
