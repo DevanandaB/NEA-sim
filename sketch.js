@@ -39,29 +39,37 @@ function getColor(col) {
 function draw() {
     background(h, s, b);
     orbitControl();
-    //temporarily make the neutron source white
     fill(255);
-    //draw the vertex counter clockwise starting from the bottom
-    beginShape();
+
+    push();
+    beginShape(LINES);
     vertex(220, -20);
     vertex(-180, 10);
     vertex(-180, -160);
     vertex(220, -150);
-    endShape(CLOSE);
-
-    beginShape();
-    vertex(300, -60);
-    vertex(223, -30);
-    vertex(223, -135);
-    vertex(300, -100);
-    endShape(CLOSE);
+    endShape();
+    noFill();
+    bezier(220, -20, 240, -28, 240, -142, 220, -150);
+    bezier(-180, 10, -120, 2, -120, -168, -180, -160);
+    pop();
 
     push();
-    strokeWeight(5);
-    stroke('black');
-    ellipse(310, -80, 50, 180);
-    ellipse(340, -80, 50, 160);
-    ellipse(370, -80, 40, 140);
+    beginShape(LINES);
+    vertex(300, -55);
+    vertex(230, -40);
+    vertex(230, -135);
+    vertex(300, -120);
+    endShape(); 
+    noFill();
+    bezier(300, -55, 320, -50, 320, -115, 300, -120);
     pop();
+
+    // push();
+    // strokeWeight(5);
+    // stroke('black');
+    // ellipse(310, -80, 50, 180);
+    // ellipse(340, -80, 50, 160);
+    // ellipse(370, -80, 40, 140);
+    // pop();
 
 }
