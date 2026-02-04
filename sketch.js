@@ -37,39 +37,82 @@ function draw() {
     background(h, s, b);
     orbitControl();
     fill(255);
+    // push();
+    // beginShape(LINES);
+    // vertex(220, -20);
+    // vertex(-180, 10);
+    // vertex(-180, -160);
+    // vertex(220, -150);
+    // endShape();
+    // noFill();
+    // bezier(220, -20, 240, -28, 240, -142, 220, -150);
+    // ellipse(-185, -75, 100, 170); //use ellipsoid later 
+    // ellipse(-195, -75, 80, 160); 
+    // ellipse(-200, -75, 40, 40);
+    // ellipse(-200, -75, 15, 15); 
+    // pop();
+
+    // push();
+    // beginShape(LINES);
+    // vertex(300, -55);
+    // vertex(230, -40);
+    // vertex(230, -135);
+    // vertex(300, -120);
+    // endShape(); 
+    // noFill();
+    // bezier(300, -55, 320, -50, 320, -115, 300, -120);
+    // pop();
+
     push();
+    noFill();
+    bezier(-70, 200, 30,
+         -120, 150, 30,
+         -30, 50, 30, 
+         100, -10, 30);
+    bezier(-195, 200, 30,
+        -165, 140, 30,
+         -125, 90, 30,
+         -175, 10, 30);
     beginShape(LINES);
-    vertex(220, -20);
-    vertex(-180, 10);
-    vertex(-180, -160);
-    vertex(220, -150);
+    vertex(-195, 200, 30);
+    vertex(-70, 200, 30);
+    // temp
+    vertex(100, -10, 30);
+    vertex(-175, 10, 30);
+    // temp
     endShape();
-    noFill();
-    bezier(220, -20, 240, -28, 240, -142, 220, -150);
-    ellipse(-185, -75, 100, 170); //use ellipsoid later 
-    ellipse(-195, -75, 80, 160); 
-    ellipse(-200, -75, 40, 40);
-    ellipse(-200, -75, 15, 15); 
-    pop();
-
-    push();
-    beginShape(LINES);
-    vertex(300, -55);
-    vertex(230, -40);
-    vertex(230, -135);
-    vertex(300, -120);
-    endShape(); 
-    noFill();
-    bezier(300, -55, 320, -50, 320, -115, 300, -120);
     pop();
 
     push();
     noFill();
-    bezier(-70, 200, -120, 150, -30, 50, 100, -10);
-    bezier(-195, 200, -165, 140, -125, 90, -175, 10);
+    bezier(-70, 200, 100,
+         -120, 150, 100, 
+         -30, 50, 100, 
+         100, -10, 100);
+    bezier(-195, 200, 100,
+         -165, 140, 100,
+         -125, 90, 100,
+          -175, 10, 100);
     beginShape(LINES);
-    vertex(-195, 200);
-    vertex(-70, 200);
+    vertex(-195, 200, 100);
+    vertex(-70, 200, 100);
+    // temp
+    vertex(100, -10, 100);
+    vertex(-175, 10, 100);
+    // temp
+    endShape();
+    pop();
+
+    push();
+    beginShape(LINES);
+    vertex(100, -10, 30);
+    vertex(100, -10, 100);
+    vertex(-70, 200, 30);
+    vertex(-70, 200, 100);
+    vertex(-195, 200, 30);
+    vertex(-195, 200, 100);
+    vertex(-175, 10, 30);
+    vertex(-175, 10, 100);
     endShape();
     pop();
 }
