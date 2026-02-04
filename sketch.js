@@ -37,20 +37,55 @@ function draw() {
     background(h, s, b);
     orbitControl();
     fill(255);
-    // push();
-    // beginShape(LINES);
-    // vertex(220, -20);
-    // vertex(-180, 10);
-    // vertex(-180, -160);
-    // vertex(220, -150);
-    // endShape();
-    // noFill();
-    // bezier(220, -20, 240, -28, 240, -142, 220, -150);
-    // ellipse(-185, -75, 100, 170); //use ellipsoid later 
-    // ellipse(-195, -75, 80, 160); 
-    // ellipse(-200, -75, 40, 40);
-    // ellipse(-200, -75, 15, 15); 
-    // pop();
+
+    push();
+    beginShape(LINES);
+    vertex(220, -20, 30);
+    vertex(-180, 10, 30);
+    vertex(-180, -160, 30);
+    vertex(220, -150, 30);
+    endShape();
+    noFill();
+    bezier(220, -20, 30,
+        240, -28, 30,
+        240, -142, 30,
+        220, -150, 30);
+    ellipse(-185, -75, 100, 170); //use ellipsoid later 
+    ellipse(-195, -75, 80, 160); 
+    ellipse(-200, -75, 40, 40);
+    ellipse(-200, -75, 15, 15); 
+    pop();
+
+    push();
+    beginShape(LINES);
+    vertex(220, -20, 100);
+    vertex(-180, 10, 100);
+    vertex(-180, -160, 100);
+    vertex(220, -150, 100);
+    endShape();
+    noFill();
+    bezier(220, -20, 100,
+        240, -28, 100,
+        240, -142, 100,
+        220, -150, 100);
+    ellipse(-185, -75, 100, 170); //use ellipsoid later 
+    ellipse(-195, -75, 80, 160); 
+    ellipse(-200, -75, 40, 40);
+    ellipse(-200, -75, 15, 15); 
+    pop();
+
+    push();
+    beginShape(LINES);
+    vertex(-180, 10, 30);
+    vertex(-180, 10, 100);
+    vertex(220, -20, 30);
+    vertex(220, -20, 100);
+    vertex(-180, -160, 30);
+    vertex(-180, -160, 100);
+    vertex(220, -150, 30);
+    vertex(220, -150, 100);
+    endShape();
+    pop();
 
     // push();
     // beginShape(LINES);
