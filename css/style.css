@@ -25,13 +25,15 @@ body {
     font-family: fantasy, sans-serif;
     font-size: 20px;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .controls-container {
     width: 500px;
     height: 600px;
     background-color: #9CAFB7;
     align-items: flex-end;
+    box-shadow: 10px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .controls-1 {
     height: 80px;
@@ -62,7 +64,7 @@ body {
     gap: 15px;
     font-size: 18px;
     font-weight: bold;
-    color: #E6B89C;
+    color: #f2c0a0;
     padding: 15px;
 }
 .controls-2 div, .controls-3 div {
@@ -96,4 +98,6 @@ body {
 .controls-3 {
     height: 340px;
 }
-
+#sim-container {
+    box-shadow: 10px 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
