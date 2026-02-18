@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 body {
-    /* display: flex; */
     min-width: 100vw;
     min-height: 100vh;
     background: #4281A4;
@@ -17,7 +16,7 @@ body {
     align-items: center;
     gap: 50px;
 }
-.navbar {
+.title {
     height: 10vh;
     width: 100%;
     padding-top: 15px;
@@ -41,6 +40,8 @@ body {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .controls-1 button {
     width: 70px;
@@ -63,9 +64,8 @@ body {
     align-items: flex-start;
     gap: 15px;
     font-size: 18px;
-    font-weight: bold;
-    color: #f2c0a0;
-    padding: 15px;
+    color: #000000;
+    padding: 20px;
 }
 .controls-2 div, .controls-3 div {
     display: flex;

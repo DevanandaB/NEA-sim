@@ -1,40 +1,24 @@
 // p5.prototype.VERSION 2.1.1
 
-//color palette: vintage coral scheme
-let table;
-let h;
-let s;
-let b;
+const playBtn = document.querySelectorAll('playBtn');
+const pauseBtn = document.querySelectorAll('pauseBtn');
+const goForwardBtn = document.querySelectorAll('goForwardBtn');
+const resetBtn = document.querySelectorAll('resetBtn');
 
-async function setup() {
+const nucleiNo = querySelectorAll('nuclei-no');
+const nucleiNoBox = querySelectorAll('nuclei-no-box');
+const neutronSpeed = querySelectorAll('neutron-speed');
+const neutronSpeedBox = querySelectorAll('neutron-speed-box');
+
+
+function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
     angleMode(DEGREES);
-    // to load table from colors.csv and catch errors if the table is not loaded
-    try {
-        table = await loadTable('colors.csv', {
-            delimiter: ',',
-            header: true
-        });
-        console.log('Table loaded:', table);
-    } catch (err) {
-        console.error('Failed to load CSV', err);
-    }
-    //color pallete in HSB
-    colorMode(HSB, 360, 100, 100);
-    palette = 1;
-    getColor(3);
-}
-
-//to get color from color palette
-function getColor(col) {
-    h = int(table.get(palette, col * 3));
-    s = int(table.get(palette, col * 3 + 1));
-    b = int(table.get(palette, col * 3 + 2));
 }
 
 function draw() {
-    background(h, s, b);
+    background('#9CAFB7');
     orbitControl();
     fill(255);
 
@@ -50,10 +34,13 @@ function draw() {
         240, -28, 30,
         240, -142, 30,
         220, -150, 30);
-    ellipse(-185, -75, 100, 170); //use ellipsoid later 
-    ellipse(-195, -75, 80, 160); 
-    ellipse(-200, -75, 40, 40);
-    ellipse(-200, -75, 15, 15); 
+    fill('#9CAFB7');
+    translate(-180, -75, 70);
+    ellipsoid(70, 85, 70, 20, 20);
+    // ellipse(-185, -75, 100, 170); //use ellipsoid later 
+    // ellipse(-195, -75, 80, 160); 
+    // ellipse(-200, -75, 40, 40);
+    // ellipse(-200, -75, 15, 15); 
     pop();
 
     push();
@@ -68,10 +55,6 @@ function draw() {
         240, -28, 100,
         240, -142, 100,
         220, -150, 100);
-    ellipse(-185, -75, 100, 170); //use ellipsoid later 
-    ellipse(-195, -75, 80, 160); 
-    ellipse(-200, -75, 40, 40);
-    ellipse(-200, -75, 15, 15); 
     pop();
 
     push();
@@ -151,3 +134,36 @@ function draw() {
     endShape();
     pop();
 }
+
+class Particle {
+    constructor(position, velocity, size, color) {
+        this.position = position;
+        this.velocity = velocity;
+        this.size = size;
+        this.color = color;
+    }
+}
+
+class Proton extends Particle {
+    constructor(position, velocity, size, color) {
+        super(position, velocity, size, color);
+    }
+}
+
+class Neutron extends Particle {
+    constructor(position, velocity, size, color) {
+        super(position, velocity, size, color);
+    }
+}
+
+
+playBtn.addEventListener('click', play = () => {});
+pauseBtn.addEventListener('click', pause = () => {});
+goForwardBtn.addEventListener('click', goForward = () => {});
+resetBtn.addEventListener('click', reset = () => {});
+
+
+nucleiNo.addEventListener('onchange', reset = () => {});
+neutronSpeed.addEventListener('onchange', reset = () => {});
+
+
