@@ -1,4 +1,7 @@
 let neutron;
+let vesselRadius;
+let detail;
+let r = 200;
 
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
@@ -11,11 +14,25 @@ function setup() {
 function draw() {
     background('#9CAFB7');
     orbitControl();
-    fill(255);
-    circle(100, 0, 500);
-    neutron.checkEdges();
-    neutron.display();
-    neutron.update();
+    // (fill(255, 200, 100, 0.5))
+    // translate(100, 0, 0);
+    // sphere(220);
+    stroke('red');
+    strokeWeight(4);
+    beginShape(POINTS);
+    for (let j = 0; j < 30; j++) {
+      for (let i = 0; i < 180; i += 2) {
+        let x = r * cos(i);
+        let y = r * sin(i);
+        let z = 0;
+        vertex(x, y, z);
+    }
+    }
+    endShape();
+
+    // neutron.checkEdges();
+    // neutron.display();
+    // neutron.update();
 }
 
 class Particle {
@@ -28,7 +45,6 @@ class Particle {
     }
   
   display() {
-    stroke(255);
     fill(0);
     ellipse(this.pos.x, this.pos.y, this.radius);
   }

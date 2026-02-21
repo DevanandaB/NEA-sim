@@ -34,13 +34,16 @@ function draw() {
         240, -28, 30,
         240, -142, 30,
         220, -150, 30);
-    fill('#9CAFB7');
-    translate(-180, -75, 70);
-    ellipsoid(70, 85, 70, 20, 20);
-    // ellipse(-185, -75, 100, 170); //use ellipsoid later 
-    // ellipse(-195, -75, 80, 160); 
-    // ellipse(-200, -75, 40, 40);
-    // ellipse(-200, -75, 15, 15); 
+    push();
+    translate(0, 0, 30);
+    ellipse(-185, -75, 100, 170); 
+    translate(0, 0, 70);
+    ellipse(-185, -75, 100, 170); 
+    pop();
+    beginShape(LINES);
+    vertex(-185, -160, 30);
+    vertex(-185, -160, 100);
+    endShape();
     pop();
 
     push();
@@ -70,16 +73,42 @@ function draw() {
     endShape();
     pop();
 
-    // push();
-    // beginShape(LINES);
-    // vertex(300, -55);
-    // vertex(230, -40);
-    // vertex(230, -135);
-    // vertex(300, -120);
-    // endShape(); 
-    // noFill();
-    // bezier(300, -55, 320, -50, 320, -115, 300, -120);
-    // pop();
+    push();
+    beginShape(LINES);
+    vertex(300, -55, 30);
+    vertex(230, -40, 30);
+    vertex(230, -135, 30);
+    vertex(300, -120, 30);
+    endShape(); 
+    noFill();
+    bezier(300, -55, 30,
+         320, -50, 30,
+         320, -115, 30,
+         300, -120, 30);
+    pop();
+
+    push();
+    beginShape(LINES);
+    vertex(300, -55, 100);
+    vertex(230, -40, 100);
+    vertex(230, -135, 100);
+    vertex(300, -120, 100);
+    endShape(); 
+    noFill();
+    bezier(300, -55, 100,
+         320, -50, 100,
+         320, -115, 100,
+         300, -120, 100);
+    pop();
+    
+    push();
+    beginShape(LINES);
+    vertex(300, -55, 30);
+    vertex(300, -55, 100);
+    vertex(300, -120, 30);
+    vertex(300, -120, 100);
+    endShape();
+    pop();
 
     push();
     noFill();
