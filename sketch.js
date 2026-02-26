@@ -164,28 +164,6 @@ function draw() {
     pop();
 }
 
-class Particle {
-    constructor(position, velocity, size, color) {
-        this.position = position;
-        this.velocity = velocity;
-        this.size = size;
-        this.color = color;
-    }
-}
-
-class Proton extends Particle {
-    constructor(position, velocity, size, color) {
-        super(position, velocity, size, color);
-    }
-}
-
-class Neutron extends Particle {
-    constructor(position, velocity, size, color) {
-        super(position, velocity, size, color);
-    }
-}
-
-
 playBtn.addEventListener('click', play = () => {});
 pauseBtn.addEventListener('click', pause = () => {});
 goForwardBtn.addEventListener('click', goForward = () => {});
