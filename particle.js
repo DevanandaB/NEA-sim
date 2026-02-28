@@ -1,21 +1,29 @@
+let particles = [];
+
 function setup() {
-    const canvas = createCanvas(750, 600, WEBGL);
-    canvas.parent('sim-container');
-    angleMode(DEGREES);
+  const canvas = createCanvas(750, 600, WEBGL);
+  canvas.parent('sim-container');
+  angleMode(DEGREES);
+  uranium();
 }
 
 function draw() {
-    background('#9CAFB7');
-    orbitControl();
+  background('#9CAFB7');
+  orbitControl();
 
-    //particles move within the boundary 
+  //particles move within the boundary 
+  push();
+  noFill();
+  translate(100, 0, 0);
+  sphere(220);
+  pop();
+
+  for (let i = 0; i < particles.length; i++) {
     push();
-    noFill();
-    translate(100, 0, 0);
-    sphere(220);
+    particles[i].display();
     pop();
+  };
 
-    uranium();
 }
 
 class Particle {
@@ -27,6 +35,7 @@ class Particle {
 
   display() {
     //fill color
+    //look more into later
     ambientLight(100);
     directionalLight(255, 255, 255, -1, 1, -1);
     ambientMaterial(52, 58, 235);
@@ -36,9 +45,7 @@ class Particle {
     shininess(150);
     noStroke();
 
-
-    //translate back inside display?
-    translate(this.pos.x, this.pos.y);
+    translate(this.pos.x, this.pos.y, this.pos.z);
     sphere(this.radius);
   }
    
@@ -52,7 +59,6 @@ class Particle {
       this.acc =  new createVector(random(0, 0.5), 0);
     }
   }
-
 }
 
 class Neutron extends Particle {
@@ -71,54 +77,35 @@ class Neutron extends Particle {
 
 Neutron.prototype = Object.create(Particle.prototype);
 
+
 function uranium() {
-  let position1 = createVector(100, 10, 0);
-  let centreParticle = new Particle(position1, 5, 'red');
-  push();
-  centreParticle.display();
-  pop();
-
-  for (let i = 0; i <= 360; i += 20) {
+  //inclination angle and azimuthal angle
+  let radius = 20;
+  //40 percent of real no of protrons and neutrons
+  for (let i = 0; i < 38; i++) {
     let position1 = createVector(100, 10, 0);
+    let inclinationAng = random(0, 360);
+    let azimuthalAng = random(0, 180);
     push();
-    position1.x += 20 * cos(i);
-    position1.y += 20 * sin(i);
+    position1.x += radius * sin(azimuthalAng) * cos(inclinationAng);
+    position1.y += radius * sin(azimuthalAng) * sin(inclinationAng);
+    position1.z += radius * cos(azimuthalAng);
     let neutron1 = new Neutron(position1, 5, 'red');
-    neutron1.display();
+    particles.push(neutron1);
     pop();
   }
-
-  for (let i = 0; i <= 360; i += 30) {
-    let position2 = createVector(100, 10, 0);
+  for (let i = 0; i < 58; i++) {
+    let position1 = createVector(100, 10, 0);
+    let inclinationAng = random(0, 360);
+    let azimuthalAng = random(0, 180);
     push();
-    position2.x += 15 * sin(i);
-    position2.y += 15 * cos(i);
-    position2.z += translate(0, 0, 3);
-    let protron1 = new Neutron(position2, 5, 'blue');
-    protron1.display();
+    position1.x += radius * sin(azimuthalAng) * cos(inclinationAng);
+    position1.y += radius * sin(azimuthalAng) * sin(inclinationAng);
+    position1.z += radius * cos(azimuthalAng);
+    let neutron1 = new Neutron(position1, 5, 'blue');
+    particles.push(neutron1);
     pop();
   }
-
-  for (let i = 0; i <= 360; i += 60) {
-    let position2 = createVector(100, 10, 0);
-    push();
-    position2.x += 10 * sin(i);
-    position2.y += 10 * cos(i);
-    position2.z += translate(0, 0, 5);
-    let protron1 = new Neutron(position2, 5, 'red');
-    protron1.display();
-    pop();
-  }
+  return particles;
 }
-
-// for (let i = 0; i < 20; i++) {
-  // let position1 = createVector(100, 10, 0);
-  //   push();
-  //   position1.x = random(100, 120);
-  //   position1.y = random(10, 20);
-  //   neutron1 = new Neutron(position1, 5, 'red');
-  //   neutron1.display();
-  //   pop();
-  // }
-
 
