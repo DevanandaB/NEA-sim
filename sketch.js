@@ -10,12 +10,15 @@ const nucleiNoBox = querySelectorAll('nuclei-no-box');
 const neutronSpeed = querySelectorAll('neutron-speed');
 const neutronSpeedBox = querySelectorAll('neutron-speed-box');
 
-
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
     angleMode(DEGREES);
     uranium();
+
+    //to fire neutrons
+    let position1 = createVector(-160, 10, 0);
+    neutron1 = new Particle(position1, 3, "blue");
 }
 
 function draw() {
@@ -40,10 +43,14 @@ function draw() {
     push();
     //scaling 
     scale(0.3);
-    translate(-800, 100, 0);
+    translate(-800, 110, 0);
     neutronSourceDraw();
     pop();
 
+    push();
+    neutron1.display();
+    neutron1.fire();
+    pop();
 }
 
 function neutronSourceDraw() {
@@ -188,6 +195,7 @@ function neutronSourceDraw() {
     endShape();
     pop();
 }
+
 
 playBtn.addEventListener('click', play = () => {});
 pauseBtn.addEventListener('click', pause = () => {});
