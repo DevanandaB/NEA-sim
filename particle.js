@@ -1,31 +1,5 @@
 let particles = [];
 
-function setup() {
-  const canvas = createCanvas(750, 600, WEBGL);
-  canvas.parent('sim-container');
-  angleMode(DEGREES);
-  uranium();
-}
-
-function draw() {
-  background('#9CAFB7');
-  orbitControl();
-
-  //particles move within the boundary 
-  push();
-  noFill();
-  translate(100, 0, 0);
-  sphere(220);
-  pop();
-
-  for (let i = 0; i < particles.length; i++) {
-    push();
-    particles[i].display();
-    pop();
-  };
-
-}
-
 class Particle {
   constructor(pos, radius, color) {
     this.pos = pos;

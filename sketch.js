@@ -15,6 +15,7 @@ function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
     angleMode(DEGREES);
+    uranium();
 }
 
 function draw() {
@@ -22,6 +23,30 @@ function draw() {
     orbitControl();
     fill(255);
 
+    //particles move within the boundary 
+    push();
+    noFill();
+    translate(100, 0, 0);
+    sphere(220);
+    pop();
+    
+    for (let i = 0; i < particles.length; i++) {
+        push();
+        particles[i].display();
+        pop();
+    };
+
+    //neutron source
+    push();
+    //scaling 
+    scale(0.3);
+    translate(-800, 100, 0);
+    neutronSourceDraw();
+    pop();
+
+}
+
+function neutronSourceDraw() {
     push();
     beginShape(LINES);
     vertex(220, -20, 30);
@@ -172,5 +197,4 @@ resetBtn.addEventListener('click', reset = () => {});
 
 nucleiNo.addEventListener('onchange', reset = () => {});
 neutronSpeed.addEventListener('onchange', reset = () => {});
-
 
