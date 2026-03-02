@@ -1,5 +1,8 @@
-let particles = [];
+//let particles = [];
 let neutron1;
+let nucleus = [];
+let neutrons = [];
+let nucleus1;
 
 class Particle {
   constructor(pos, radius, color) {
@@ -33,35 +36,60 @@ class Particle {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
   }
+
+  collide(nucleus) {
+    let distance = this.pos.dist(nucleus.pos);
+    if(distance < (this.radius + nucleus.radius)) {
+      console.log('Collision detected');
+    }
+  }
+
 }
 
-function uranium() {
-  //inclination angle and azimuthal angle
-  let radius = 20;
-  for (let i = 0; i < 92; i++) {
-    let position = createVector(100, 10, 0);
-    let inclinationAng = random(0, 360);
-    let azimuthalAng = random(0, 180);
-    push();
-    position.x += radius * sin(azimuthalAng) * cos(inclinationAng);
-    position.y += radius * sin(azimuthalAng) * sin(inclinationAng);
-    position.z += radius * cos(azimuthalAng);
-    let proton = new Particle(position, 3, 'red');
-    particles.push(proton);
-    pop();
+
+class Nucleus {
+  constructor(pos, neutron, proton) {
+    this.pos = pos;
+    this.radius = 20;
+    this.neutron = neutron;
+    this.proton = proton;
+    this.particles = [];
+    //bit confused on how to get on with this
+    this.state = 'stable';
   }
-  for (let i = 0; i < 143; i++) {
-    let position = createVector(100, 10, 0);
-    let inclinationAng = random(0, 360);
-    let azimuthalAng = random(0, 180);
-    push();
-    position.x += radius * sin(azimuthalAng) * cos(inclinationAng);
-    position.y += radius * sin(azimuthalAng) * sin(inclinationAng);
-    position.z += radius * cos(azimuthalAng);
-    let neutron = new Particle(position, 3, 'blue');
-    particles.push(neutron);
-    pop();
+
+  createNucleus() {
+    //protons
+    for (let i = 0; i < (this.proton); i++) {
+      let position = this.pos;
+      let inclinationAng = random(0, 360);
+      let azimuthalAng = random(0, 180);
+      push();
+      position.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
+      position.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
+      position.z += this.radius * cos(azimuthalAng);
+      let proton = new Particle(position, 3, 'red');
+      this.particles.push(proton);
+      pop();
+    }
+
+    //neutrons
+    for (let i = 0; i < this.neutron; i++) {
+      let position = this.pos;
+      let inclinationAng = random(0, 360);
+      let azimuthalAng = random(0, 180);
+      push();
+      position.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
+      position.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
+      position.z += this.radius * cos(azimuthalAng);
+      let neutron = new Particle(position, 3, 'blue');
+      this.particles.push(neutron);
+      pop();
   }
-  return particles;
+  return nucleus;
+}
+
+
+
 }
 

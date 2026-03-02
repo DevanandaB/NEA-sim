@@ -14,11 +14,14 @@ function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
     angleMode(DEGREES);
-    uranium();
+    //uranium();
 
     //to fire neutrons
     let position1 = createVector(-160, 10, 0);
     neutron1 = new Particle(position1, 3, "blue");
+
+    let position2 = createVector(-100, 0, 0);
+    nucleus1 = new Nucleus(position2);
 }
 
 function draw() {
@@ -33,23 +36,26 @@ function draw() {
     sphere(220);
     pop();
     
-    for (let i = 0; i < particles.length; i++) {
-        push();
-        particles[i].display();
-        pop();
-    };
+    // for (let i = 0; i < particles.length; i++) {
+    //     push();
+    //     particles[i].display();
+    //     pop();
+    // };
 
     //neutron source
     push();
-    //scaling 
     scale(0.3);
     translate(-800, 110, 0);
     neutronSourceDraw();
     pop();
 
+    // push();
+    // neutron1.display();
+    // neutron1.fire();
+    // pop();
+
     push();
-    neutron1.display();
-    neutron1.fire();
+    nucleus1.createNucleus();
     pop();
 }
 
