@@ -1,7 +1,10 @@
 //let particles = [];
-let neutron1;
 let nucleus = [];
 let neutrons = [];
+
+let particles = [];
+
+let neutron1;
 let nucleus1;
 
 class Particle {
@@ -38,6 +41,7 @@ class Particle {
   }
 
   collide(nucleus) {
+    let flag = false;
     let distance = this.pos.dist(nucleus.pos);
     if(distance < (this.radius + nucleus.radius)) {
       console.log('Collision detected');
@@ -47,49 +51,87 @@ class Particle {
 }
 
 
-class Nucleus {
+class Nucleus extends Particle {
   constructor(pos, neutron, proton) {
+    super();
     this.pos = pos;
     this.radius = 20;
     this.neutron = neutron;
     this.proton = proton;
+    //global array is not used as particles will be repeatedly called during 
+    //each draw loop in processing lang like p5js
     this.particles = [];
-    //bit confused on how to get on with this
     this.state = 'stable';
   }
 
   createNucleus() {
     //protons
-    for (let i = 0; i < (this.proton); i++) {
-      let position = this.pos;
+    for (let i = 0; i < this.proton; i++) {
       let inclinationAng = random(0, 360);
       let azimuthalAng = random(0, 180);
-      push();
-      position.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
-      position.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
-      position.z += this.radius * cos(azimuthalAng);
-      let proton = new Particle(position, 3, 'red');
+      this.pos.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
+      this.pos.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
+      this.pos.z += this.radius * cos(azimuthalAng);
+      let proton = new Particle(this.pos, 3, 'red');
       this.particles.push(proton);
-      pop();
     }
 
     //neutrons
     for (let i = 0; i < this.neutron; i++) {
-      let position = this.pos;
       let inclinationAng = random(0, 360);
       let azimuthalAng = random(0, 180);
-      push();
-      position.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
-      position.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
-      position.z += this.radius * cos(azimuthalAng);
-      let neutron = new Particle(position, 3, 'blue');
+      this.pos.x += this.radius * sin(azimuthalAng) * cos(inclinationAng);
+      this.pos.y += this.radius * sin(azimuthalAng) * sin(inclinationAng);
+      this.pos.z += this.radius * cos(azimuthalAng);
+      let neutron = new Particle(this.pos, 3, 'blue');
       this.particles.push(neutron);
-      pop();
   }
-  return nucleus;
+  return this.particles;
 }
 
+  //display() for particle displays particle
+  //displayNucleus() displays nucleus which is multiple particles
+  displayNucleus() {
+    for(let i = 0; i < this.particles.length; i++) {
+      this.particles[i].super.display();
+    }
+  }
 
+}
 
+Nucleus.prototype = Object.create(Particle.prototype);
+
+//Nucleus class holds instances of Particle class and pushes them into 
+//an array called particle array
+//A Nucleus class method should loop through the particle array and display
+//the each item in the array 
+
+function uranium() {
+    //protons
+    for (let i = 0; i < 92; i++) {
+      let pos = createVector(100, 10, 0);
+      let radius = 20;
+      let inclinationAng = random(0, 360);
+      let azimuthalAng = random(0, 180);
+      pos.x += radius * sin(azimuthalAng) * cos(inclinationAng);
+      pos.y += radius * sin(azimuthalAng) * sin(inclinationAng);
+      pos.z += radius * cos(azimuthalAng);
+      let proton = new Particle(pos, 3, 'red');
+      particles.push(proton);
+    }
+
+    //neutrons
+    for (let i = 0; i < 143; i++) {
+      let pos = createVector(100, 10, 0);
+      let radius = 20;
+      let inclinationAng = random(0, 360);
+      let azimuthalAng = random(0, 180);
+      pos.x += radius * sin(azimuthalAng) * cos(inclinationAng);
+      pos.y += radius * sin(azimuthalAng) * sin(inclinationAng);
+      pos.z += radius * cos(azimuthalAng);
+      let neutron = new Particle(pos, 3, 'blue');
+      particles.push(neutron);
+  }
+  console.log(particles);
 }
 
