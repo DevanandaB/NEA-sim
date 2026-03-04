@@ -15,18 +15,17 @@ function setup() {
     canvas.parent('sim-container');
     angleMode(DEGREES);
 
-    //uranium();
-
     //to fire neutrons
    let position1 = createVector(-160, 10, 0);
     neutron1 = new Particle(position1, 3, "blue");
 
-    let position2 = createVector(-100, 0, 0);
+    let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 92, 143);
+
     //nucleus
     push();
     nucleus1.createNucleus();
-    nucleus1.displayNucleus();
+    //nucleus1.fission()
     pop();
     
 }
@@ -50,18 +49,13 @@ function draw() {
     neutronSourceDraw();
     pop();
 
-
     push();
     neutron1.display();
     neutron1.fire();
+    neutron1.collide(nucleus1);
     pop();
-    
 
-    push();
-    for(let i = 0; i < particles.length; i++) {
-      particles[i].display();
-    }
-    pop();
+    nucleus1.displayNucleus();
 }
 
 function neutronSourceDraw() {
@@ -216,4 +210,3 @@ resetBtn.addEventListener('click', reset = () => {});
 
 nucleiNo.addEventListener('onchange', reset = () => {});
 neutronSpeed.addEventListener('onchange', reset = () => {});
-
