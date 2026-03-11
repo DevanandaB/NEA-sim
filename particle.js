@@ -15,6 +15,7 @@ class Particle {
     this.color = color;
   }
 
+  //working
   display() {
     if(this.pos.x > 330) {return}
     //fill color
@@ -33,17 +34,19 @@ class Particle {
     pop();
   }
    
+  //working
   fire() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
   }
 
-  //made a collidion resolution
+  //made a collidion resolution - now have to add that particle to the nucleus
   collide(nucleus) {
     let distance = this.pos.dist(nucleus.pos);
     if(distance < (this.radius + nucleus.radius)) {
       this.vel = new createVector(0, 0, 0);
       this.acc = new createVector(0, 0, 0);
+      //this.particles.push(this);
     }
   }
 
@@ -61,12 +64,13 @@ class Nucleus extends Particle {
     this.proton = proton;
     this.particles = [];
     this.state = 'stable';
-    this.color = color;
-    this.vel = new createVector(0, 0, 0);
-    this.acc = new createVector(0, 0, 0);
+    //vel and acc
+    this.vel = new createVector(1, 0, 0);
+    this.acc = new createVector(0.5, 0, 0);
 
   }
 
+  //working
   createNucleus() {
     //protons
     //changed this.pos.x = let x
@@ -95,27 +99,58 @@ class Nucleus extends Particle {
   return this.particles;
 }
 
+//working
   displayNucleus() {
     for(let i = 0; i < this.particles.length; i++) {
       this.particles[i].display();
     }
   }
 
-  // fission() {
-  //   //nucleus color becomes dimmer
-  //   //nucleus vibrate
-  //   //explosion 
-  //   //splits into two
-  //   //releases three neutrons
-  //   //all the contents absorb within the vessel boundary
-  //   for(let i = 0; i < this.particles.length; i++) {
-  //       console.log(this.color);
-  //     }
-      
-  //   }
+  split() {
+    // for(let i = 0; i < this.particles.length; i++) {
+    //   let current = this.particles[i];
+    //   let centerPosX = current.pos.x / 2;
+    //   console.log(centerPosX);
+    //   //console.log(centerPosX);
+    // }
+
+    let current = this.displayNucleus();
+    //for the particles that go above the position move to one array
+    //calculate highest particle position
+    let half = 0;
+
+    //   //center of the nucleus and divide it by two
+    
+
+    
+  }
+
+  fission() {
+    //if neutron collided with nucleus, vibrate nucleus
+    for(let i = 0; i < this.particles.length; i++) {
+      let current = this.particles[i];
+      current.pos.x += random(-1, 1);
+      current.pos.y += random(-1, 1);
+      current.pos.z += random(-1, 1);
+  }
+
+
+    }
+
+
+    //explosion 
+    //splits into two
+    //releases three neutrons
+    //all the contents absorb within the vessel boundary
+    
+
+
+  chainReaction() {};
 
 
   }
 
 Nucleus.prototype = Object.create(Particle.prototype);
+
+
 
