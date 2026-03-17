@@ -20,11 +20,12 @@ function setup() {
     neutron1 = new Particle(position1, 3, "blue", 'neutron');
 
     let position2 = createVector(100, 0, 0);
-    nucleus1 = new Nucleus(position2, 92, 143);
+    nucleus1 = new Nucleus(position2, 143, 92);
 
     //nucleus
     push();
     nucleus1.createNucleus();
+    nucleus1.split();
     pop();
     
 }
@@ -50,7 +51,7 @@ function draw() {
 
     push();
     neutron1.display();
-    neutron1.fire();
+    //neutron1.fire();
     neutron1.collide(nucleus1);
     pop();
 

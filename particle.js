@@ -106,20 +106,30 @@ class Nucleus extends Particle {
     }
   }
 
+
   split() {
-    // for(let i = 0; i < this.particles.length; i++) {
-    //   let current = this.particles[i];
-    //   let centerPosX = current.pos.x / 2;
-    //   console.log(centerPosX);
-    //   //console.log(centerPosX);
-    // }
+    const half = this.particles.length / 2;    
+    let firstHalf = this.particles.slice(0, half);
+    let secHalf =  this.particles.slice(half, this.particles.length);
 
-    let current = this.displayNucleus();
-    //for the particles that go above the position move to one array
-    //calculate highest particle position
-    let half = 0;
+    let randomX = random(10, 50);
+    let randomY = random(5, 10);
 
-    //center of the nucleus and divide it by two 
+    for(let i = 0; i < firstHalf.length; i++) {
+      if(this.pos.x < -120 || this.pos.y > 220) {return}
+      let current = firstHalf[i];
+      current.pos.x = current.origin.x - randomX;
+      current.pos.y = current.origin.y + randomY;
+    }
+
+    for(let i = 0; i < secHalf.length; i++) {
+      if(this.pos.x > 320 || this.pos.y < -220) {return}
+      let current = secHalf[i];
+      current.pos.x = current.origin.x + randomX;
+      current.pos.y = current.origin.y - randomY;
+      
+    }
+
   }
 
   fission() {
@@ -135,11 +145,17 @@ class Nucleus extends Particle {
       current.pos.y = current.origin.y + random(-1, 1);
       current.pos.z = current.origin.z + random(-1, 1);
   }
-    }
+
+  //this.split();
+
+  }
+
   chainReaction() {}
   }
 
-Nucleus.prototype = Object.create(Particle.prototype);
+
+
+  Nucleus.prototype = Object.create(Particle.prototype);
 
 
 
