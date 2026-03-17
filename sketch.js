@@ -17,7 +17,7 @@ function setup() {
 
     //to fire neutrons
    let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, 3, "blue");
+    neutron1 = new Particle(position1, 3, "blue", 'neutron');
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 92, 143);
@@ -25,7 +25,6 @@ function setup() {
     //nucleus
     push();
     nucleus1.createNucleus();
-    nucleus1.fission();
     pop();
     
 }
@@ -56,6 +55,8 @@ function draw() {
     pop();
 
     nucleus1.displayNucleus();
+    nucleus1.fission();
+
 }
 
 function neutronSourceDraw() {

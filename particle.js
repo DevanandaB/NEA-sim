@@ -7,15 +7,16 @@ let neutron1;
 let nucleus1;
 
 class Particle {
-  constructor(pos, radius, color) {
+  constructor(pos, radius, color, type) {
     this.pos = pos;
+    this.origin = pos;
+    this.type = type;
     this.vel = new createVector(0.5, 0, 0);
     this.acc = new createVector(1, 0, 0);
     this.radius = radius;
     this.color = color;
   }
 
-  //working
   display() {
     if(this.pos.x > 330) {return}
     //fill color
@@ -34,13 +35,12 @@ class Particle {
     pop();
   }
    
-  //working
   fire() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
   }
 
-  //made a collidion resolution - now have to add that particle to the nucleus
+  //made a collision resolution - now have to add that particle to the nucleus
   collide(nucleus) {
     let distance = this.pos.dist(nucleus.pos);
     if(distance < (this.radius + nucleus.radius)) {
@@ -59,18 +59,19 @@ class Nucleus extends Particle {
     //global array is not used as particles will be repeatedly called during 
     //each draw loop in processing lang like p5js
     this.pos = pos;
+    //fixed position
+    this.origin = pos;
     this.radius = 20;
     this.neutron = neutron;
     this.proton = proton;
     this.particles = [];
     this.state = 'stable';
     //vel and acc
-    this.vel = new createVector(1, 0, 0);
-    this.acc = new createVector(0.5, 0, 0);
+    this.velocity = new createVector(1, 0, 0);
+    this.acceleration = new createVector(0.5, 0, 0);
 
   }
 
-  //working
   createNucleus() {
     //protons
     //changed this.pos.x = let x
@@ -80,8 +81,8 @@ class Nucleus extends Particle {
       let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(inclinationAng);
       let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(inclinationAng);
       let z = this.pos.z + this.radius * cos(azimuthalAng);
-      let pos = createVector(x, y, z);
-      let proton = new Particle(pos, 3, 'red');
+      let position = createVector(x, y, z);
+      let proton = new Particle(position, 3, 'red', 'proton');
       this.particles.push(proton);
     }
 
@@ -92,14 +93,13 @@ class Nucleus extends Particle {
       let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(inclinationAng);
       let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(inclinationAng);
       let z = this.pos.z + this.radius * cos(azimuthalAng);
-      let pos = createVector(x, y, z);
-      let neutron = new Particle(pos, 3, 'blue');
+      let position = createVector(x, y, z);
+      let neutron = new Particle(position, 3, 'blue', 'neutron');
       this.particles.push(neutron);
   }
   return this.particles;
 }
 
-//working
   displayNucleus() {
     for(let i = 0; i < this.particles.length; i++) {
       this.particles[i].display();
@@ -119,35 +119,24 @@ class Nucleus extends Particle {
     //calculate highest particle position
     let half = 0;
 
-    //   //center of the nucleus and divide it by two
-    
-
-    
+    //center of the nucleus and divide it by two 
   }
 
   fission() {
-    //if neutron collided with nucleus, vibrate nucleus
-    for(let i = 0; i < this.particles.length; i++) {
-      let current = this.particles[i];
-      current.pos.x += random(-1, 1);
-      current.pos.y += random(-1, 1);
-      current.pos.z += random(-1, 1);
-  }
-
-
-    }
-
-
-    //explosion 
+    //if neutron collided with nucleus, vibrate particles within nucleus
+    //explosion (last step if u have time)
     //splits into two
     //releases three neutrons
     //all the contents absorb within the vessel boundary
-    
 
-
-  chainReaction() {};
-
-
+    for(let i = 0; i < this.particles.length; i++) {
+      let current = this.particles[i];
+      current.pos.x = current.origin.x + random(-1, 1);
+      current.pos.y = current.origin.y + random(-1, 1);
+      current.pos.z = current.origin.z + random(-1, 1);
+  }
+    }
+  chainReaction() {}
   }
 
 Nucleus.prototype = Object.create(Particle.prototype);
