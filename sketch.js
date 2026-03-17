@@ -25,7 +25,7 @@ function setup() {
     //nucleus
     push();
     nucleus1.createNucleus();
-    nucleus1.split();
+    //nucleus1.split();
     pop();
     
 }

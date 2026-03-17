@@ -67,8 +67,8 @@ class Nucleus extends Particle {
     this.particles = [];
     this.state = 'stable';
     //vel and acc
-    this.velocity = new createVector(1, 0, 0);
-    this.acceleration = new createVector(0.5, 0, 0);
+    this.velocity = new createVector(0, 0, 0);
+    this.acceleration = new createVector(0.5, 0.5, 0);
 
   }
 
@@ -112,21 +112,20 @@ class Nucleus extends Particle {
     let firstHalf = this.particles.slice(0, half);
     let secHalf =  this.particles.slice(half, this.particles.length);
 
-    let randomX = random(10, 50);
-    let randomY = random(5, 10);
-
     for(let i = 0; i < firstHalf.length; i++) {
       if(this.pos.x < -120 || this.pos.y > 220) {return}
       let current = firstHalf[i];
-      current.pos.x = current.origin.x - randomX;
-      current.pos.y = current.origin.y + randomY;
+      current.vel = createVector(4, -4, 0);
+      current.acc = createVector(0, 0, 0);
+      current.fire();
     }
 
     for(let i = 0; i < secHalf.length; i++) {
       if(this.pos.x > 320 || this.pos.y < -220) {return}
       let current = secHalf[i];
-      current.pos.x = current.origin.x + randomX;
-      current.pos.y = current.origin.y - randomY;
+      current.vel = createVector(-4, 4, 0);
+      current.acc = createVector(0, 0, 0);
+      current.fire();
       
     }
 
@@ -138,7 +137,6 @@ class Nucleus extends Particle {
     //splits into two
     //releases three neutrons
     //all the contents absorb within the vessel boundary
-
     for(let i = 0; i < this.particles.length; i++) {
       let current = this.particles[i];
       current.pos.x = current.origin.x + random(-1, 1);
@@ -146,7 +144,7 @@ class Nucleus extends Particle {
       current.pos.z = current.origin.z + random(-1, 1);
   }
 
-  //this.split();
+  this.split();
 
   }
 
