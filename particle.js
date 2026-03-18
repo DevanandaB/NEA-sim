@@ -11,14 +11,15 @@ class Particle {
     this.pos = pos;
     this.origin = pos;
     this.type = type;
-    this.vel = new createVector(0.5, 0, 0);
-    this.acc = new createVector(1, 0, 0);
+    this.vel = new createVector(0.25, 0, 0);
+    this.acc = new createVector(0.25, 0, 0);
     this.radius = radius;
     this.color = color;
   }
 
   display() {
-    if(this.pos.x > 330) {return}
+    if(this.pos.x > 330 || this.pos.x < -120 & 
+      this.pos.y > 150 || this.pos.y < -160) {return}
     //fill color
     //look more into later
     push();
@@ -34,7 +35,7 @@ class Particle {
     sphere(this.radius);
     pop();
   }
-   
+
   fire() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
@@ -46,10 +47,13 @@ class Particle {
     if(distance < (this.radius + nucleus.radius)) {
       this.vel = new createVector(0, 0, 0);
       this.acc = new createVector(0, 0, 0);
-      //to change the state
+      //to change state
       nucleus.state = 'unstable';
+      nucleus.particles.push(this);
     }
   }
+
+  //boundaryCheck() {}
 
 }
 
@@ -67,10 +71,9 @@ class Nucleus extends Particle {
     this.proton = proton;
     this.particles = [];
     this.state = 'stable';
-    //vel and acc
     this.velocity = new createVector(0, 0, 0);
     this.acceleration = new createVector(0, 0, 0);
-
+    this.timer = 0;
   }
 
   createNucleus() {
@@ -114,7 +117,7 @@ class Nucleus extends Particle {
     let secHalf =  this.particles.slice(half, this.particles.length);
 
     for(let i = 0; i < firstHalf.length; i++) {
-      if(this.pos.x < -120 || this.pos.y > 220) {return}
+      //if(this.pos.x < -120 || this.pos.y > 220) {return}
       let current = firstHalf[i];
       current.vel = createVector(4, -4, 0);
       current.acc = createVector(0, 0, 0);
@@ -122,7 +125,7 @@ class Nucleus extends Particle {
     }
 
     for(let i = 0; i < secHalf.length; i++) {
-      if(this.pos.x > 320 || this.pos.y < -220) {return}
+      //if(this.pos.x > 320 || this.pos.y < -220) {return}
       let current = secHalf[i];
       current.vel = createVector(-4, 4, 0);
       current.acc = createVector(0, 0, 0);
@@ -147,20 +150,25 @@ class Nucleus extends Particle {
     //splits into two
     //releases three neutrons
     //all the contents absorb within the vessel boundary
-
-    if(this.state == 'unstable') {
-      for(let i = 0; i < this.particles.length; i++) {
-      let current = this.particles[i];
-      current.pos.x = current.origin.x + random(-1, 1);
-      current.pos.y = current.origin.y + random(-1, 1);
-      current.pos.z = current.origin.z + random(-1, 1);      
-    }
     
-    this.split();
-    this.release();
-  
+    if(this.state == 'unstable') {
+      this.timer++; 
+      for(let i = 0; i < this.particles.length; i++) {
+        let current = this.particles[i];
+        current.pos.x = current.origin.x + random(-1, 1);
+        current.pos.y = current.origin.y + random(-1, 1);
+        current.pos.z = current.origin.z + random(-1, 1);
+      }
+      
+      if(this.timer >= 50) {this.state = 'fission'} 
   }
-}
+
+    if(this.state == 'fission') {
+      this.split();
+      this.release();
+    }
+  }
+
 
   chainReaction() {}
   }
