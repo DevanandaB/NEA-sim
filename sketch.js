@@ -18,8 +18,8 @@ function setup() {
     angleMode(DEGREES);
 
     //to fire neutrons
-//    let position1 = createVector(-160, 10, 0);
-//     neutron1 = new Particle(position1, 3, "blue", 'neutron');
+    let position1 = createVector(-160, 10, 0);
+    neutron1 = new Particle(position1, 3, "blue", 'neutron');
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
@@ -50,7 +50,6 @@ function draw() {
     background('#9CAFB7');
     orbitControl();
     fill(255);
-    //play();
 
     //particles move within the boundary 
     push();
@@ -66,11 +65,14 @@ function draw() {
     neutronSourceDraw();
     pop();
 
-    // push();
-    // neutron1.display();
-    // neutron1.fire();
-    // neutron1.collide(nucleus1);
-    // pop();
+    if(isPlaying) {
+        push();
+        neutron1.display();
+        neutron1.fire();
+        neutron1.collide(nucleus1);
+        pop();
+    }
+
 
     nucleus1.displayNucleus();
     // nucleus2.displayNucleus();
@@ -80,7 +82,6 @@ function draw() {
     // nucleus6.displayNucleus();
 
     nucleus1.fission();
-
 
 
 }
@@ -228,21 +229,22 @@ function neutronSourceDraw() {
     pop();
 }
 
-//make it work in draw(), push and pop does not work 
-const play = async() => {
-    push();
-    neutron1.display();
-    neutron1.fire();
-    neutron1.collide(nucleus1);
-    pop();
-}
+let isPlaying = false;
+const play = () => {isPlaying = true}
+playBtn.addEventListener('click', play);
 
-function reset() {};
+let isReset = false;
+const reset = () => {
+    //neutron goes back
+    //a new nucleus, after deleting all the other ones
+    isReset = true;
+    let position1 = createVector(-160, 10, 0);
+    return position1;
+};
+resetBtn.addEventListener('click', reset);
 
-playBtn.addEventListener('click', play());
 pauseBtn.addEventListener('click', pause = () => {});
 goForwardBtn.addEventListener('click', forward = () => {});
-resetBtn.addEventListener('click', reset());
 
 
 nucleiRange.addEventListener('input', update = (e) => {
@@ -257,4 +259,10 @@ nucleiRange.addEventListener('input', update = (e) => {
         nucleus2.createNucleus();
         nucleus2.display();
     }
+});
+
+neutronSpeedRange.addEventListener('input', update = (e) => {
+    const value = neutronSpeedRange.value;
+    neutronSpeedInput.value = value;
+    
 });
