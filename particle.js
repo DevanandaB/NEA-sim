@@ -145,12 +145,7 @@ class Nucleus extends Particle {
   }
 
   fission() {
-    //if neutron collided with nucleus, vibrate particles within nucleus
     //explosion (last step if u have time)
-    //splits into two
-    //releases three neutrons
-    //all the contents absorb within the vessel boundary
-    
     if(this.state == 'unstable') {
       this.timer++; 
       for(let i = 0; i < this.particles.length; i++) {
@@ -160,7 +155,7 @@ class Nucleus extends Particle {
         current.pos.z = current.origin.z + random(-1, 1);
       }
       
-      if(this.timer >= 50) {this.state = 'fission'} 
+      if(this.timer >= 30) {this.state = 'fission'} 
   }
 
     if(this.state == 'fission') {
@@ -170,7 +165,11 @@ class Nucleus extends Particle {
   }
 
 
-  chainReaction() {}
+  chainReaction() {
+    //check collision for released particle with other nucleus
+    //add fission function to them
+
+  }
   }
 
 
