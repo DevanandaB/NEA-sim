@@ -46,7 +46,8 @@ class Particle {
     if(distance < (this.radius + nucleus.radius)) {
       this.vel = new createVector(0, 0, 0);
       this.acc = new createVector(0, 0, 0);
-      //this.particles.push(this);
+      //to change the state
+      nucleus.state = 'unstable';
     }
   }
 
@@ -68,7 +69,7 @@ class Nucleus extends Particle {
     this.state = 'stable';
     //vel and acc
     this.velocity = new createVector(0, 0, 0);
-    this.acceleration = new createVector(0.5, 0.5, 0);
+    this.acceleration = new createVector(0, 0, 0);
 
   }
 
@@ -131,22 +132,35 @@ class Nucleus extends Particle {
 
   }
 
+  release() {
+    for (let i = 0; i < 3; i++) {
+    let angle = random(TWO_PI / 3, TWO_PI);
+    this.particles[i].vel = createVector(cos(angle) * 3, sin(angle) * 3, 0);
+    this.particles[i].acc = createVector(0, 0, 0);
+    this.particles[i].fire();
+  }
+  }
+
   fission() {
     //if neutron collided with nucleus, vibrate particles within nucleus
     //explosion (last step if u have time)
     //splits into two
     //releases three neutrons
     //all the contents absorb within the vessel boundary
-    for(let i = 0; i < this.particles.length; i++) {
+
+    if(this.state == 'unstable') {
+      for(let i = 0; i < this.particles.length; i++) {
       let current = this.particles[i];
       current.pos.x = current.origin.x + random(-1, 1);
       current.pos.y = current.origin.y + random(-1, 1);
-      current.pos.z = current.origin.z + random(-1, 1);
+      current.pos.z = current.origin.z + random(-1, 1);      
+    }
+    
+    this.split();
+    this.release();
+  
   }
-
-  this.split();
-
-  }
+}
 
   chainReaction() {}
   }

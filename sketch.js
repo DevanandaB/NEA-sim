@@ -25,7 +25,6 @@ function setup() {
     //nucleus
     push();
     nucleus1.createNucleus();
-    //nucleus1.split();
     pop();
     
 }
@@ -51,7 +50,7 @@ function draw() {
 
     push();
     neutron1.display();
-    //neutron1.fire();
+    neutron1.fire();
     neutron1.collide(nucleus1);
     pop();
 
