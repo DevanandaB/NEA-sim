@@ -1,14 +1,16 @@
 // p5.prototype.VERSION 2.1.1
 
-const playBtn = document.querySelectorAll('playBtn');
-const pauseBtn = document.querySelectorAll('pauseBtn');
-const goForwardBtn = document.querySelectorAll('goForwardBtn');
-const resetBtn = document.querySelectorAll('resetBtn');
+const playBtn = document.querySelector('.play-btn');
+const pauseBtn = document.querySelector('.pause-btn');
+const goForwardBtn = document.querySelector('.forward-btn');
+const resetBtn = document.querySelector('.reset-btn');
 
-const nucleiNo = querySelectorAll('nuclei-no');
-const nucleiNoBox = querySelectorAll('nuclei-no-box');
-const neutronSpeed = querySelectorAll('neutron-speed');
-const neutronSpeedBox = querySelectorAll('neutron-speed-box');
+const nucleiRange = document.querySelector('#nuclei-range');
+const nucleiInput = document.querySelector('#nuclei-input');
+
+const neutronSpeedRange = document.querySelector('#speed-range');
+const neutronSpeedInput = document.querySelector('#speed-input');
+
 
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
@@ -16,8 +18,8 @@ function setup() {
     angleMode(DEGREES);
 
     //to fire neutrons
-   let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, 3, "blue", 'neutron');
+//    let position1 = createVector(-160, 10, 0);
+//     neutron1 = new Particle(position1, 3, "blue", 'neutron');
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
@@ -25,17 +27,17 @@ function setup() {
     let position3 = createVector(140, -130, 0);
     nucleus2 = new Nucleus(position3, 143, 92);
 
-    let position4 = createVector(180, 120, 0);
-    nucleus3 = new Nucleus(position4, 143, 92);
+    // let position4 = createVector(180, 120, 0);
+    // nucleus3 = new Nucleus(position4, 143, 92);
 
-    let position5 = createVector(50, 130, 0);
-    nucleus4 = new Nucleus(position5, 143, 92);
+    // let position5 = createVector(50, 130, 0);
+    // nucleus4 = new Nucleus(position5, 143, 92);
 
-    let position6 = createVector(245, -10, 0);
-    nucleus5 = new Nucleus(position6, 143, 92);
+    // let position6 = createVector(245, -10, 0);
+    // nucleus5 = new Nucleus(position6, 143, 92);
 
-    let position7 = createVector(-10, -100, 0);
-    nucleus6 = new Nucleus(position7, 143, 92);
+    // let position7 = createVector(-10, -100, 0);
+    // nucleus6 = new Nucleus(position7, 143, 92);
 
     //nucleus
     push();
@@ -48,6 +50,7 @@ function draw() {
     background('#9CAFB7');
     orbitControl();
     fill(255);
+    //play();
 
     //particles move within the boundary 
     push();
@@ -63,11 +66,11 @@ function draw() {
     neutronSourceDraw();
     pop();
 
-    push();
-    neutron1.display();
-    //neutron1.fire();
-    neutron1.collide(nucleus1);
-    pop();
+    // push();
+    // neutron1.display();
+    // neutron1.fire();
+    // neutron1.collide(nucleus1);
+    // pop();
 
     nucleus1.displayNucleus();
     // nucleus2.displayNucleus();
@@ -77,6 +80,8 @@ function draw() {
     // nucleus6.displayNucleus();
 
     nucleus1.fission();
+
+
 
 }
 
@@ -223,19 +228,33 @@ function neutronSourceDraw() {
     pop();
 }
 
+//make it work in draw(), push and pop does not work 
+const play = async() => {
+    push();
+    neutron1.display();
+    neutron1.fire();
+    neutron1.collide(nucleus1);
+    pop();
+}
 
-playBtn.addEventListener('click', play = () => {});
+function reset() {};
+
+playBtn.addEventListener('click', play());
 pauseBtn.addEventListener('click', pause = () => {});
-goForwardBtn.addEventListener('click', goForward = () => {});
-resetBtn.addEventListener('click', reset = () => {});
+goForwardBtn.addEventListener('click', forward = () => {});
+resetBtn.addEventListener('click', reset());
 
 
-nucleiNo.addEventListener('input', add = () => {
+nucleiRange.addEventListener('input', update = (e) => {
     //when the slider is changed, add/remove nucleus
-    //set a maximum value to 10 and a min value to 1
-    //show the number in the box on top of the slider
-    console.log(nucleiNo.input);
+    const inputValue = nucleiRange.value;
+    nucleiInput.value = inputValue;
+    for(let i = 0; i < inputValue; i++) {
+        let randomX = random(-65, 330);
+        let randomY = random(-220, 220);
+        let position3 = createVector(randomX, randomY, 0);
+        nucleus2 = new Nucleus(position3, 143, 92);
+        nucleus2.createNucleus();
+        nucleus2.display();
+    }
 });
-
-
-neutronSpeed.addEventListener('onchange', reset = () => {});
