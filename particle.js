@@ -1,10 +1,11 @@
-let nucleus = [];
+let nuclei = [];
 let neutrons = [];
 
 let particles = [];
 
 let neutron1;
 let nucleus1;
+let isotope;
 
 class Particle {
   constructor(pos, radius, color, type) {
@@ -71,8 +72,8 @@ class Nucleus extends Particle {
     this.proton = proton;
     this.particles = [];
     this.state = 'stable';
-    this.velocity = new createVector(0, 0, 0);
-    this.acceleration = new createVector(0, 0, 0);
+    this.vel = new createVector(0, 0, 0);
+    this.acc = new createVector(0, 0, 0);
     this.timer = 0;
   }
 
@@ -104,7 +105,20 @@ class Nucleus extends Particle {
   return this.particles;
 }
 
+// shuffleArray() {
+//     // Source - https://stackoverflow.com/a/46545530
+// // Posted by superluminary, modified by community. See post 'Timeline' for change history
+// // Retrieved 2026-03-18, License - CC BY-SA 4.0
+
+// let shuffled = this.particles
+//     .map(value => ({ value, sort: Math.random() }))
+//     .sort((a, b) => a.sort - b.sort)
+//     .map(({ value }) => value);
+//     return shuffled;
+//   }
+
   displayNucleus() {
+    //this.shuffleArray();
     for(let i = 0; i < this.particles.length; i++) {
       this.particles[i].display();
     }
@@ -136,12 +150,15 @@ class Nucleus extends Particle {
   }
 
   release() {
-    for (let i = 0; i < 3; i++) {
-    let angle = random(TWO_PI / 3, TWO_PI);
-    this.particles[i].vel = createVector(cos(angle) * 3, sin(angle) * 3, 0);
-    this.particles[i].acc = createVector(0, 0, 0);
-    this.particles[i].fire();
-  }
+    //120 deg
+    let tempPos = this.pos;
+    for(let i = 0; i < 3; i++) {
+      let angle = TWO_PI / 3 * (i + random(0, 1));
+      let neutron = new Particle(tempPos, 3, 'blue', 'neutron');
+      neutron.vel = createVector(0.2 * cos(angle), 0.2 * sin(angle), 0);
+      neutron.acc = createVector(0, 0, 0);
+      neutrons.push(neutron);
+    }
   }
 
   fission() {
@@ -168,7 +185,10 @@ class Nucleus extends Particle {
   chainReaction() {
     //check collision for released particle with other nucleus
     //add fission function to them
+    if(this.state == 'fission') {
 
+    }
+    this.state = 'chainReaction'
   }
   }
 

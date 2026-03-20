@@ -11,6 +11,14 @@ const nucleiInput = document.querySelector('#nuclei-input');
 const neutronSpeedRange = document.querySelector('#speed-range');
 const neutronSpeedInput = document.querySelector('#speed-input');
 
+const isotopeRange = document.querySelector('#isotope-range');
+const isotopeInput = document.querySelector('#isotope-input');
+
+// const myChart = new Chart("myChart", {
+//     type: "area",
+//     data: {},
+//     options: {}
+//   });
 
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
@@ -27,22 +35,16 @@ function setup() {
     let position3 = createVector(140, -130, 0);
     nucleus2 = new Nucleus(position3, 143, 92);
 
+    //isotope: when neutron fired to it, it just vibrates and becomes grey
     // let position4 = createVector(180, 120, 0);
-    // nucleus3 = new Nucleus(position4, 143, 92);
+    // isotope = new Nucleus(position4, 146, 92)
 
-    // let position5 = createVector(50, 130, 0);
-    // nucleus4 = new Nucleus(position5, 143, 92);
-
-    // let position6 = createVector(245, -10, 0);
-    // nucleus5 = new Nucleus(position6, 143, 92);
-
-    // let position7 = createVector(-10, -100, 0);
-    // nucleus6 = new Nucleus(position7, 143, 92);
-
-    //nucleus
     push();
     nucleus1.createNucleus();
     pop();
+
+    //creates nucleus
+    updateNucleiNo();
     
 }
 
@@ -75,16 +77,24 @@ function draw() {
 
 
     nucleus1.displayNucleus();
-    // nucleus2.displayNucleus();
-    // nucleus3.displayNucleus();
-    // nucleus4.displayNucleus();
-    // nucleus5.displayNucleus();
-    // nucleus6.displayNucleus();
-
     nucleus1.fission();
 
+    for(let i = 0; i < nuclei.length; i++) {
+      push();
+      nuclei[i].displayNucleus();
+      pop();
+    }
 
+    for(let i = 0; i < neutrons.length; i++) {
+        neutrons[i].display();
+        neutrons[i].fire();
+    }
+        
+    
 }
+
+
+
 
 function neutronSourceDraw() {
     push();
@@ -238,31 +248,50 @@ const reset = () => {
     //neutron goes back
     //a new nucleus, after deleting all the other ones
     isReset = true;
-    let position1 = createVector(-160, 10, 0);
-    return position1;
 };
 resetBtn.addEventListener('click', reset);
 
+
 pauseBtn.addEventListener('click', pause = () => {});
+
+//leave go forward last
 goForwardBtn.addEventListener('click', forward = () => {});
 
 
-nucleiRange.addEventListener('input', update = (e) => {
+
+const updateNucleiNo = (e) => {
     //when the slider is changed, add/remove nucleus
     const inputValue = nucleiRange.value;
     nucleiInput.value = inputValue;
-    for(let i = 0; i < inputValue; i++) {
-        let randomX = random(-65, 330);
+
+    //clears array 
+    nuclei = [];
+
+    //create nucleus upto input value only
+    for(let i = 0; i < inputValue - 1; i++) {
+        let randomX = random(-120, 330);
         let randomY = random(-220, 220);
-        let position3 = createVector(randomX, randomY, 0);
-        nucleus2 = new Nucleus(position3, 143, 92);
-        nucleus2.createNucleus();
-        nucleus2.display();
-    }
-});
+        let randomZ = random(-110, 110);
+        let position = createVector(randomX, randomY, randomZ);
+        let nucleus = new Nucleus(position, 143, 92);
+        nucleus.createNucleus();
+        nuclei.push(nucleus);
+    } 
+    return nuclei;
+}
+nucleiRange.addEventListener('input', updateNucleiNo);
+
+
+
+
 
 neutronSpeedRange.addEventListener('input', update = (e) => {
     const value = neutronSpeedRange.value;
     neutronSpeedInput.value = value;
     
+});
+
+isotopeRange.addEventListener('input', update = (e) => {
+    const value = isotopeRange.value;
+    isotopeInput.value = value;
 });
