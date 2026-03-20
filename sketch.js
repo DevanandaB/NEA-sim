@@ -28,12 +28,11 @@ function setup() {
     //to fire neutrons
     let position1 = createVector(-160, 10, 0);
     neutron1 = new Particle(position1, 3, "blue", 'neutron');
+    
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
-
-    let position3 = createVector(140, -130, 0);
-    nucleus2 = new Nucleus(position3, 143, 92);
+    //nuclei.push(nucleus1);
 
     //isotope: when neutron fired to it, it just vibrates and becomes grey
     // let position4 = createVector(180, 120, 0);
@@ -67,7 +66,7 @@ function draw() {
     neutronSourceDraw();
     pop();
 
-    if(isPlaying) {
+    if(isPlaying & isFiring) {
         push();
         neutron1.display();
         neutron1.fire();
@@ -240,16 +239,34 @@ function neutronSourceDraw() {
 }
 
 let isPlaying = false;
-const play = () => {isPlaying = true}
+const play = () => {isPlaying = true; isFiring = true}
 playBtn.addEventListener('click', play);
 
-let isReset = false;
+
 const reset = () => {
-    //neutron goes back
-    //a new nucleus, after deleting all the other ones
-    isReset = true;
+    //slider moves to 1
+    //remove all nucleus except the main nucelus
+    nucleiRange.value = 1;
+    nucleiInput.value = 1;
+
+    //setting the nucleus to empty so if fission is happening it removes so fission stops
+    nucleus1 = null;
+    nuclei = [];
+    neutrons = [];
+    neutron1 = null;
+    
+    let position1 = createVector(-160, 10, 0);
+    neutron1 = new Particle(position1, 3, "blue", 'neutron');
+
+    let position2 = createVector(100, 0, 0);
+    nucleus1 = new Nucleus(position2, 143, 92);
+    nucleus1.createNucleus();
+
+    isFiring = false;
+    isPlaying = true;
 };
 resetBtn.addEventListener('click', reset);
+
 
 
 pauseBtn.addEventListener('click', pause = () => {});
@@ -263,10 +280,8 @@ const updateNucleiNo = (e) => {
     //when the slider is changed, add/remove nucleus
     const inputValue = nucleiRange.value;
     nucleiInput.value = inputValue;
-
     //clears array 
     nuclei = [];
-
     //create nucleus upto input value only
     for(let i = 0; i < inputValue - 1; i++) {
         let randomX = random(-120, 330);
@@ -288,7 +303,8 @@ nucleiRange.addEventListener('input', updateNucleiNo);
 neutronSpeedRange.addEventListener('input', update = (e) => {
     const value = neutronSpeedRange.value;
     neutronSpeedInput.value = value;
-    
+
+
 });
 
 isotopeRange.addEventListener('input', update = (e) => {

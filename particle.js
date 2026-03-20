@@ -7,12 +7,16 @@ let neutron1;
 let nucleus1;
 let isotope;
 
+let neutronSpeed = 1;
+
+let isFiring = false;
+
 class Particle {
   constructor(pos, radius, color, type) {
     this.pos = pos;
     this.origin = pos;
     this.type = type;
-    this.vel = new createVector(0.25, 0, 0);
+    this.vel = new createVector(neutronSpeed, 0, 0);
     this.acc = new createVector(0.25, 0, 0);
     this.radius = radius;
     this.color = color;
@@ -40,6 +44,7 @@ class Particle {
   fire() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
+    isFiring = true;
   }
 
   //made a collision resolution - now have to add that particle to the nucleus
@@ -104,18 +109,6 @@ class Nucleus extends Particle {
   }
   return this.particles;
 }
-
-// shuffleArray() {
-//     // Source - https://stackoverflow.com/a/46545530
-// // Posted by superluminary, modified by community. See post 'Timeline' for change history
-// // Retrieved 2026-03-18, License - CC BY-SA 4.0
-
-// let shuffled = this.particles
-//     .map(value => ({ value, sort: Math.random() }))
-//     .sort((a, b) => a.sort - b.sort)
-//     .map(({ value }) => value);
-//     return shuffled;
-//   }
 
   displayNucleus() {
     //this.shuffleArray();
@@ -195,5 +188,3 @@ class Nucleus extends Particle {
 
 
   Nucleus.prototype = Object.create(Particle.prototype);
-
-
