@@ -27,14 +27,13 @@ function setup() {
 
     //to fire neutrons
     let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, 3, "blue", 'neutron');
+    neutron1 = new Particle(position1, "blue", 'neutron');
     
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
     //nuclei.push(nucleus1);
 
-    //isotope: when neutron fired to it, it just vibrates and becomes grey
     // let position4 = createVector(180, 120, 0);
     // isotope = new Nucleus(position4, 146, 92)
 
@@ -256,7 +255,7 @@ const reset = () => {
     neutron1 = null;
     
     let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, 3, "blue", 'neutron');
+    neutron1 = new Particle(position1, "blue", 'neutron');
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
@@ -295,9 +294,6 @@ const updateNucleiNo = (e) => {
     return nuclei;
 }
 nucleiRange.addEventListener('input', updateNucleiNo);
-
-
-
 
 
 neutronSpeedRange.addEventListener('input', update = (e) => {

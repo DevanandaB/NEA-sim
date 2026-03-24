@@ -7,26 +7,24 @@ let neutron1;
 let nucleus1;
 let isotope;
 
-let neutronSpeed = 1;
+//let neutronSpeed = 1;
 
 let isFiring = false;
 
 class Particle {
-  constructor(pos, radius, color, type) {
+  constructor(pos, color, type) {
     this.pos = pos;
     this.origin = pos;
     this.type = type;
-    this.vel = new createVector(neutronSpeed, 0, 0);
-    this.acc = new createVector(0.25, 0, 0);
-    this.radius = radius;
+    this.vel = new createVector(0.25, 0, 0);
+    this.acc = new createVector(1, 0, 0);
+    this.radius = 3;
     this.color = color;
   }
 
   display() {
     if(this.pos.x > 330 || this.pos.x < -120 & 
       this.pos.y > 150 || this.pos.y < -160) {return}
-    //fill color
-    //look more into later
     push();
     ambientLight(100);
     directionalLight(255, 255, 255, -1, 1, -1);
@@ -60,9 +58,7 @@ class Particle {
   }
 
   //boundaryCheck() {}
-
 }
-
 
 class Nucleus extends Particle {
   constructor(pos, neutron, proton) {
@@ -70,7 +66,6 @@ class Nucleus extends Particle {
     //global array is not used as particles will be repeatedly called during 
     //each draw loop in processing lang like p5js
     this.pos = pos;
-    //fixed position
     this.origin = pos;
     this.radius = 20;
     this.neutron = neutron;
@@ -92,7 +87,7 @@ class Nucleus extends Particle {
       let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(inclinationAng);
       let z = this.pos.z + this.radius * cos(azimuthalAng);
       let position = createVector(x, y, z);
-      let proton = new Particle(position, 3, 'red', 'proton');
+      let proton = new Particle(position, 'red', 'proton');
       this.particles.push(proton);
     }
 
@@ -104,7 +99,7 @@ class Nucleus extends Particle {
       let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(inclinationAng);
       let z = this.pos.z + this.radius * cos(azimuthalAng);
       let position = createVector(x, y, z);
-      let neutron = new Particle(position, 3, 'blue', 'neutron');
+      let neutron = new Particle(position, 'blue', 'neutron');
       this.particles.push(neutron);
   }
   return this.particles;
@@ -124,7 +119,6 @@ class Nucleus extends Particle {
     let secHalf =  this.particles.slice(half, this.particles.length);
 
     for(let i = 0; i < firstHalf.length; i++) {
-      //if(this.pos.x < -120 || this.pos.y > 220) {return}
       let current = firstHalf[i];
       current.vel = createVector(4, -4, 0);
       current.acc = createVector(0, 0, 0);
@@ -132,7 +126,6 @@ class Nucleus extends Particle {
     }
 
     for(let i = 0; i < secHalf.length; i++) {
-      //if(this.pos.x > 320 || this.pos.y < -220) {return}
       let current = secHalf[i];
       current.vel = createVector(-4, 4, 0);
       current.acc = createVector(0, 0, 0);
@@ -147,7 +140,7 @@ class Nucleus extends Particle {
     let tempPos = this.pos;
     for(let i = 0; i < 3; i++) {
       let angle = TWO_PI / 3 * (i + random(0, 1));
-      let neutron = new Particle(tempPos, 3, 'blue', 'neutron');
+      let neutron = new Particle(tempPos, 'blue', 'neutron');
       neutron.vel = createVector(0.2 * cos(angle), 0.2 * sin(angle), 0);
       neutron.acc = createVector(0, 0, 0);
       neutrons.push(neutron);
