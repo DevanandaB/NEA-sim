@@ -1,71 +1,4 @@
 // // p5.prototype.VERSION 2.1.1
-// // let particle1;
-// // let nucleus1;
-
-// function setup() {
-//     const canvas = createCanvas(750, 600, WEBGL);
-//     canvas.parent('sim-container');
-//     angleMode(DEGREES);
-
-//     let pos1 = createVector(200, 10, 0);
-//     particle1 = new Particle(pos1, "blue");
-
-//     // let pos2 = createVector(100, 0, 0);
-//     // nucleus1 = new Nucleus(pos2, 92, 143);
-//     // nucleus1.createNucleus();
-    
-// }
-
-// function draw() {
-//     background('#9CAFB7');
-//     fill(255);
-//     //change camera orientation
-//     orbitControl();
-
-//     push();
-//     neutronSourceDraw();
-//     pop();
-
-//     push();
-//     translate(0, 0, 60);
-//     neutronSourceDraw();
-//     pop();
-
-
-
-//     //containment vessel
-//     // push();
-//     // noFill();
-//     // translate(100, 0, 0);
-//     // sphere(220);
-//     // pop();
-
-//     // particle1.display();
-//     // nucleus1.displayNucleus();
-    
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const playBtn = document.querySelector('.play-btn');
 const pauseBtn = document.querySelector('.pause-btn');
@@ -105,7 +38,6 @@ function setup() {
     pop();
     neutron1.collide(nucleus1);
 
-    //creates nucleus
     updateNucleiNo();
     
 }

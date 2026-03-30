@@ -48,9 +48,15 @@ class Particle {
     if(distance < (this.radius + nucleus.radius)) {
       this.vel = new createVector(0, 0, 0);
       this.acc = new createVector(0, 0, 0);
-      //to change state
+      // if (this.state == 'stable') {
+      //   nucleus.state = 'unstable';
+      //   nucleus.particles.push(this);
+      // } else {
+      //   nucleus.state = 'chain';
+      // }
       nucleus.state = 'unstable';
       nucleus.particles.push(this);
+      
     }
   }
 
@@ -142,7 +148,6 @@ class Nucleus {
   }
 
   fission() {
-    //explosion (last step if u have time)
     if(this.state == 'unstable') {
       this.timer++; 
       for(let i = 0; i < this.particles.length; i++) {
@@ -158,14 +163,16 @@ class Nucleus {
     if(this.state == 'fission') {
       this.split();
       this.release();
+      this.state == 'fissioned';
     }
   }
 
 
   chainReaction() {
-    if(this.state == 'fission') {
-
+    if(this.state == 'chain') {
+      for (let i = 0; i < neutrons.length; i++) {
+        neutrons[i].collide(nuclei);
+      }
     }
-    this.state = 'chainReaction'
   }
   }
