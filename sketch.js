@@ -45,142 +45,7 @@
     
 // }
 
-// // class Particle {
-// //   constructor(pos, color) {
-// //     this.pos = pos;
-// //     this.vel = new createVector(0.25, 0, 0);
-// //     this.acc = new createVector(0.15, 0, 0);
-// //     this.radius = 5;
-// //     this.color = color;
-// //   }
 
-// //   display() {
-// //     //boundary checking
-// //     if(this.pos.x > 330 || this.pos.x < -120 || 
-// //       this.pos.y > 220 || this.pos.y < -220) {return}
-// //     push();
-// //     fill(this.color);
-// //     noStroke();
-// //     translate(this.pos.x, this.pos.y, this.pos.z);
-// //     sphere(this.radius);
-// //     pop();
-// //   }
-
-
-// //   fire() {
-// //     this.vel.add(this.acc);
-// //     this.pos.add(this.vel);
-// //   }
-
-
-// //   //made a collision resolution - now have to add that particle to the nucleus
-// //   collide(nucleus) {
-// //     let distance = this.pos.dist(nucleus.pos);
-// //     if(distance < (this.radius + nucleus.radius)) {
-// //       this.vel = new createVector(0, 0, 0);
-// //       this.acc = new createVector(0, 0, 0);
-// //       //to change state
-// //       nucleus.state = 'unstable';
-// //       nucleus.particles.push(this);
-// //     }
-// //   }
-
-// // }
-
-
-// // class Nucleus {
-// //   constructor(pos, neutronNo, protonNo) {
-// //     this.pos = pos;
-// //     this.radius = 20;
-// //     this.neutronNo = neutronNo;
-// //     this.protonNo = protonNo;
-// //     this.particles = [];
-// //     this.state = 'stable';
-// //     this.vel = new createVector(0, 0, 0);
-// //     this.acc = new createVector(0, 0, 0);
-// //   }
-
-// //   createNucleus() {
-// //     for (let i = 0; i < 360; i++) {
-// //       let randomX = this.radius * cos(i);
-// //       let randomY = this.radius * sin(i);
-// //       let randomPos = new createVector(randomX, randomY, 0);
-// //       for (let j = 0; j < this.protonNo; j++) {
-// //         push();
-// //         let proton = new Particle(randomPos, 'red');
-// //         this.particles.push(proton);
-// //         pop();
-// //       }
-// //     }
-
-// //     for (let i = 0; i < 360; i++) {
-// //       let randomX = this.radius * cos(i);
-// //       let randomY = this.radius * sin(i);
-// //       let randomPos = new createVector(randomX, randomY, 0);
-// //       for (let j = 0; j < this.protonNo; j++) {
-// //         push();
-// //         let neutron = new Particle(randomPos, 'blue');
-// //         this.particles.push(neutron);
-// //         pop();
-// //       }
-// //     }
-// //     return this.particles;
-
-// //   }
-
-// //   displayNucleus() {
-// //     for(let i = 0; i < this.particles.length; i++) {
-// //       this.particles[i].display();
-// //     }
-// //   }
-
-// // }
-
-// function neutronSourceDraw() {
-//   noFill();
-//   //main trapezium outline
-//   push();
-//   beginShape();
-//   vertex(220, -20);
-//   vertex(-180, 10);
-//   vertex(-180, -160);
-//   vertex(220, -150);
-//   endShape(CLOSE);
-
-//   //ellipse to the left of the main trapezium
-//   ellipse(-185, -75, 100, 170);
-
-//   //small trapezium outline
-//   beginShape();
-//   vertex(300, -55);
-//   vertex(230, -40);
-//   vertex(230, -135);
-//   vertex(300, -120);
-//   endShape(CLOSE);
-//   pop();
-
-//   //bottom curved shape
-//   push();
-//     noFill();
-//     bezier(-70, 200,
-//          -120, 150,  
-//          -30, 50, 
-//          100, -10);
-//     bezier(-195, 200,
-//          -165, 140,
-//          -125, 90, 
-//           -175, 10,);
-//     beginShape(LINES);
-//     vertex(-195, 200);
-//     vertex(-70, 200);
-//     // temp
-//     vertex(100, -10);
-//     vertex(-175, 10);
-//     // temp
-//     endShape();
-//   pop();
-
-// }
 
 
 
@@ -257,11 +122,12 @@ function draw() {
     sphere(220);
     pop();
     
+
     //neutron source
     push();
     scale(0.3);
     translate(-800, 110, 0);
-    neutronSourceDraw();
+    neutronSourceDraw(0, 60);
     pop();
 
     if(isPlaying & isFiring) {
@@ -271,7 +137,6 @@ function draw() {
         neutron1.collide(nucleus1);
         pop();
     }
-
 
     nucleus1.displayNucleus();
     nucleus1.fission();
@@ -286,153 +151,147 @@ function draw() {
         neutrons[i].display();
         neutrons[i].fire();
     }
-        
     
 }
 
 
-function neutronSourceDraw() {
-    push();
-    beginShape(LINES);
-    vertex(220, -20, 30);
-    vertex(-180, 10, 30);
-    vertex(-180, -160, 30);
-    vertex(220, -150, 30);
-    endShape();
+
+function neutronSourceDraw(z1, z2) {
     noFill();
-    bezier(220, -20, 30,
-        240, -28, 30,
-        240, -142, 30,
-        220, -150, 30);
+
+    //main trapezium outline
     push();
-    translate(0, 0, 30);
-    ellipse(-185, -75, 100, 170); 
-    translate(0, 0, 70);
-    ellipse(-185, -75, 100, 170); 
-    pop();
-    beginShape(LINES);
-    vertex(-185, -160, 30);
-    vertex(-185, -160, 100);
-    endShape();
+    beginShape();
+    vertex(220, -20, z1);
+    vertex(-180, 10, z1);
+    vertex(-180, -160, z1);
+    vertex(220, -150, z1);
+    endShape(CLOSE);
+
+    //main trapezium outline with diff depth
+    push();
+    beginShape();
+    vertex(220, -20, z2);
+    vertex(-180, 10, z2);
+    vertex(-180, -160, z2);
+    vertex(220, -150, z2);
+    endShape(CLOSE);
+
+
+    //ellipse to the left of the main trapezium
+    push();
+    translate(0, 0, z1);
+    ellipse(-185, -75, 100, 170);
     pop();
 
+    //ellipse to the left of the main trapezium with diff depth
     push();
-    beginShape(LINES);
-    vertex(220, -20, 100);
-    vertex(-180, 10, 100);
-    vertex(-180, -160, 100);
-    vertex(220, -150, 100);
-    endShape();
-    noFill();
-    bezier(220, -20, 100,
-        240, -28, 100,
-        240, -142, 100,
-        220, -150, 100);
+    translate(0, 0, z2);
+    ellipse(-185, -75, 100, 170);
     pop();
 
-    push();
-    beginShape(LINES);
-    vertex(-180, 10, 30);
-    vertex(-180, 10, 100);
-    vertex(220, -20, 30);
-    vertex(220, -20, 100);
-    vertex(-180, -160, 30);
-    vertex(-180, -160, 100);
-    vertex(220, -150, 30);
-    vertex(220, -150, 100);
-    endShape();
+    //small trapezium outline
+    beginShape();
+    vertex(300, -55, z1);
+    vertex(230, -40, z1);
+    vertex(230, -135, z1);
+    vertex(300, -120, z1);
+    endShape(CLOSE);
     pop();
 
-    push();
-    beginShape(LINES);
-    vertex(300, -55, 30);
-    vertex(230, -40, 30);
-    vertex(230, -135, 30);
-    vertex(300, -120, 30);
-    endShape(); 
-    noFill();
-    bezier(300, -55, 30,
-         320, -50, 30,
-         320, -115, 30,
-         300, -120, 30);
+    //small trapezium outline with diff depth
+    beginShape();
+    vertex(300, -55, z2);
+    vertex(230, -40, z2);
+    vertex(230, -135, z2);
+    vertex(300, -120, z2);
+    endShape(CLOSE);
     pop();
 
+    //bottom curved shape
     push();
-    beginShape(LINES);
-    vertex(300, -55, 100);
-    vertex(230, -40, 100);
-    vertex(230, -135, 100);
-    vertex(300, -120, 100);
-    endShape(); 
-    noFill();
-    bezier(300, -55, 100,
-         320, -50, 100,
-         320, -115, 100,
-         300, -120, 100);
+      noFill();
+      bezier(-70, 200, z1,
+           -120, 150, z1, 
+           -30, 50, z1, 
+           100, -10, z1);
+      bezier(-195, 200, z1,
+           -165, 140, z1,
+           -125, 90, z1,
+            -175, 10, z1);
+      beginShape(LINES);
+      vertex(-195, 200, z1);
+      vertex(-70, 200, z1);
+      vertex(100, -10, z1);
+      vertex(-175, 10, z1);
+      endShape();
+    pop();
+
+    //bottom curved shape with diff depth
+    push();
+      noFill();
+      bezier(-70, 200, z2,
+           -120, 150, z2, 
+           -30, 50, z2, 
+           100, -10, z2);
+      bezier(-195, 200, z2,
+           -165, 140, z2,
+           -125, 90, z2,
+            -175, 10, z2);
+      beginShape(LINES);
+      vertex(-195, 200, z2);
+      vertex(-70, 200, z2);
+      vertex(100, -10, z2);
+      vertex(-175, 10, z2);
+      endShape();
     pop();
     
+    //depth extrusion
+    //bottom curved shape 
     push();
     beginShape(LINES);
-    vertex(300, -55, 30);
-    vertex(300, -55, 100);
-    vertex(300, -120, 30);
-    vertex(300, -120, 100);
+    vertex(100, -10, z1);
+    vertex(100, -10, z2);
+    vertex(-70, 200, z1);
+    vertex(-70, 200, z2);
+    vertex(-195, 200, z1);
+    vertex(-195, 200, z2);
+    vertex(-175, 10, z1);
+    vertex(-175, 10, z2);
     endShape();
     pop();
 
+    //main trapezium 
     push();
-    noFill();
-    bezier(-70, 200, 30,
-         -120, 150, 30,
-         -30, 50, 30, 
-         100, -10, 30);
-    bezier(-195, 200, 30,
-        -165, 140, 30,
-         -125, 90, 30,
-         -175, 10, 30);
     beginShape(LINES);
-    vertex(-195, 200, 30);
-    vertex(-70, 200, 30);
-    // temp
-    vertex(100, -10, 30);
-    vertex(-175, 10, 30);
-    // temp
+    vertex(-180, 10, z1);
+    vertex(-180, 10, z2);
+    vertex(220, -20, z1);
+    vertex(220, -20, z2);
+    vertex(-180, -160, z1);
+    vertex(-180, -160, z2);
+    vertex(220, -150, z1);
+    vertex(220, -150, z2);
     endShape();
     pop();
 
+    // small trapezium depth extrusion
     push();
-    noFill();
-    bezier(-70, 200, 100,
-         -120, 150, 100, 
-         -30, 50, 100, 
-         100, -10, 100);
-    bezier(-195, 200, 100,
-         -165, 140, 100,
-         -125, 90, 100,
-          -175, 10, 100);
     beginShape(LINES);
-    vertex(-195, 200, 100);
-    vertex(-70, 200, 100);
-    // temp
-    vertex(100, -10, 100);
-    vertex(-175, 10, 100);
-    // temp
+    vertex(300, -55, z1);   vertex(300, -55, z2);
+    vertex(230, -40, z1);   vertex(230, -40, z2);
+    vertex(230, -135, z1);  vertex(230, -135, z2);
+    vertex(300, -120, z1);  vertex(300, -120, z2);
     endShape();
     pop();
 
-    push();
-    beginShape(LINES);
-    vertex(100, -10, 30);
-    vertex(100, -10, 100);
-    vertex(-70, 200, 30);
-    vertex(-70, 200, 100);
-    vertex(-195, 200, 30);
-    vertex(-195, 200, 100);
-    vertex(-175, 10, 30);
-    vertex(-175, 10, 100);
-    endShape();
-    pop();
+
 }
+
+
+
+
+
 
 let isPlaying = false;
 const play = () => {isPlaying = true; isFiring = true}

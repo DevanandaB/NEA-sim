@@ -71,12 +71,14 @@ class Nucleus {
   }
 
   createNucleus() {
+    //protons and created first and then neutrons so not random arrangment
     for (let i = 0; i < this.proton; i++) {
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
-      let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(polarAng);
-      let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(polarAng);
-      let z = this.pos.z + this.radius * cos(azimuthalAng);
+      let randomRadius = random(10, 20);
+      let x = this.pos.x + randomRadius * sin(azimuthalAng) * cos(polarAng);
+      let y = this.pos.y + randomRadius * sin(azimuthalAng) * sin(polarAng);
+      let z = this.pos.z + randomRadius * cos(azimuthalAng);
       let position = createVector(x, y, z);
       let proton = new Particle(position, 'red', 'proton');
       this.particles.push(proton);
@@ -86,9 +88,10 @@ class Nucleus {
     for (let i = 0; i < this.neutron; i++) {
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
-      let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(polarAng);
-      let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(polarAng);
-      let z = this.pos.z + this.radius * cos(azimuthalAng);
+      let randomRadius = random(10, 20);
+      let x = this.pos.x + randomRadius * sin(azimuthalAng) * cos(polarAng);
+      let y = this.pos.y + randomRadius * sin(azimuthalAng) * sin(polarAng);
+      let z = this.pos.z + randomRadius * cos(azimuthalAng);
       let position = createVector(x, y, z);
       let neutron = new Particle(position, 'blue');
       this.particles.push(neutron);
