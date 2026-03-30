@@ -1,4 +1,206 @@
-// p5.prototype.VERSION 2.1.1
+// // p5.prototype.VERSION 2.1.1
+// // let particle1;
+// // let nucleus1;
+
+// function setup() {
+//     const canvas = createCanvas(750, 600, WEBGL);
+//     canvas.parent('sim-container');
+//     angleMode(DEGREES);
+
+//     let pos1 = createVector(200, 10, 0);
+//     particle1 = new Particle(pos1, "blue");
+
+//     // let pos2 = createVector(100, 0, 0);
+//     // nucleus1 = new Nucleus(pos2, 92, 143);
+//     // nucleus1.createNucleus();
+    
+// }
+
+// function draw() {
+//     background('#9CAFB7');
+//     fill(255);
+//     //change camera orientation
+//     orbitControl();
+
+//     push();
+//     neutronSourceDraw();
+//     pop();
+
+//     push();
+//     translate(0, 0, 60);
+//     neutronSourceDraw();
+//     pop();
+
+
+
+//     //containment vessel
+//     // push();
+//     // noFill();
+//     // translate(100, 0, 0);
+//     // sphere(220);
+//     // pop();
+
+//     // particle1.display();
+//     // nucleus1.displayNucleus();
+    
+// }
+
+// // class Particle {
+// //   constructor(pos, color) {
+// //     this.pos = pos;
+// //     this.vel = new createVector(0.25, 0, 0);
+// //     this.acc = new createVector(0.15, 0, 0);
+// //     this.radius = 5;
+// //     this.color = color;
+// //   }
+
+// //   display() {
+// //     //boundary checking
+// //     if(this.pos.x > 330 || this.pos.x < -120 || 
+// //       this.pos.y > 220 || this.pos.y < -220) {return}
+// //     push();
+// //     fill(this.color);
+// //     noStroke();
+// //     translate(this.pos.x, this.pos.y, this.pos.z);
+// //     sphere(this.radius);
+// //     pop();
+// //   }
+
+
+// //   fire() {
+// //     this.vel.add(this.acc);
+// //     this.pos.add(this.vel);
+// //   }
+
+
+// //   //made a collision resolution - now have to add that particle to the nucleus
+// //   collide(nucleus) {
+// //     let distance = this.pos.dist(nucleus.pos);
+// //     if(distance < (this.radius + nucleus.radius)) {
+// //       this.vel = new createVector(0, 0, 0);
+// //       this.acc = new createVector(0, 0, 0);
+// //       //to change state
+// //       nucleus.state = 'unstable';
+// //       nucleus.particles.push(this);
+// //     }
+// //   }
+
+// // }
+
+
+// // class Nucleus {
+// //   constructor(pos, neutronNo, protonNo) {
+// //     this.pos = pos;
+// //     this.radius = 20;
+// //     this.neutronNo = neutronNo;
+// //     this.protonNo = protonNo;
+// //     this.particles = [];
+// //     this.state = 'stable';
+// //     this.vel = new createVector(0, 0, 0);
+// //     this.acc = new createVector(0, 0, 0);
+// //   }
+
+// //   createNucleus() {
+// //     for (let i = 0; i < 360; i++) {
+// //       let randomX = this.radius * cos(i);
+// //       let randomY = this.radius * sin(i);
+// //       let randomPos = new createVector(randomX, randomY, 0);
+// //       for (let j = 0; j < this.protonNo; j++) {
+// //         push();
+// //         let proton = new Particle(randomPos, 'red');
+// //         this.particles.push(proton);
+// //         pop();
+// //       }
+// //     }
+
+// //     for (let i = 0; i < 360; i++) {
+// //       let randomX = this.radius * cos(i);
+// //       let randomY = this.radius * sin(i);
+// //       let randomPos = new createVector(randomX, randomY, 0);
+// //       for (let j = 0; j < this.protonNo; j++) {
+// //         push();
+// //         let neutron = new Particle(randomPos, 'blue');
+// //         this.particles.push(neutron);
+// //         pop();
+// //       }
+// //     }
+// //     return this.particles;
+
+// //   }
+
+// //   displayNucleus() {
+// //     for(let i = 0; i < this.particles.length; i++) {
+// //       this.particles[i].display();
+// //     }
+// //   }
+
+// // }
+
+// function neutronSourceDraw() {
+//   noFill();
+//   //main trapezium outline
+//   push();
+//   beginShape();
+//   vertex(220, -20);
+//   vertex(-180, 10);
+//   vertex(-180, -160);
+//   vertex(220, -150);
+//   endShape(CLOSE);
+
+//   //ellipse to the left of the main trapezium
+//   ellipse(-185, -75, 100, 170);
+
+//   //small trapezium outline
+//   beginShape();
+//   vertex(300, -55);
+//   vertex(230, -40);
+//   vertex(230, -135);
+//   vertex(300, -120);
+//   endShape(CLOSE);
+//   pop();
+
+//   //bottom curved shape
+//   push();
+//     noFill();
+//     bezier(-70, 200,
+//          -120, 150,  
+//          -30, 50, 
+//          100, -10);
+//     bezier(-195, 200,
+//          -165, 140,
+//          -125, 90, 
+//           -175, 10,);
+//     beginShape(LINES);
+//     vertex(-195, 200);
+//     vertex(-70, 200);
+//     // temp
+//     vertex(100, -10);
+//     vertex(-175, 10);
+//     // temp
+//     endShape();
+//   pop();
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const playBtn = document.querySelector('.play-btn');
 const pauseBtn = document.querySelector('.pause-btn');
@@ -27,19 +229,16 @@ function setup() {
 
     //to fire neutrons
     let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, "blue", 'neutron');
+    neutron1 = new Particle(position1, "blue");
     
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
-    //nuclei.push(nucleus1);
-
-    // let position4 = createVector(180, 120, 0);
-    // isotope = new Nucleus(position4, 146, 92)
 
     push();
     nucleus1.createNucleus();
     pop();
+    neutron1.collide(nucleus1);
 
     //creates nucleus
     updateNucleiNo();
@@ -90,8 +289,6 @@ function draw() {
         
     
 }
-
-
 
 
 function neutronSourceDraw() {
@@ -255,7 +452,7 @@ const reset = () => {
     neutron1 = null;
     
     let position1 = createVector(-160, 10, 0);
-    neutron1 = new Particle(position1, "blue", 'neutron');
+    neutron1 = new Particle(position1, "blue");
 
     let position2 = createVector(100, 0, 0);
     nucleus1 = new Nucleus(position2, 143, 92);
