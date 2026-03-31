@@ -12,7 +12,6 @@ let isFiring = false;
 class Particle {
   constructor(pos, color) {
     this.pos = pos;
-    this.origin = pos;
     this.vel = new createVector(0.25, 0, 0);
     this.acc = new createVector(1, 0, 0);
     this.radius = 3;
@@ -35,6 +34,7 @@ class Particle {
     sphere(this.radius);
     pop();
   }
+
 
   fire() {
     this.vel.add(this.acc);
@@ -65,7 +65,6 @@ class Particle {
 class Nucleus {
   constructor(pos, neutron, proton) {
     this.pos = pos;
-    this.origin = pos;
     this.radius = 20;
     this.neutron = neutron;
     this.proton = proton;
@@ -112,6 +111,20 @@ class Nucleus {
     }
   }
 
+  vibrate() {
+    if(this.state == 'unstable') {
+      this.timer++; 
+      for(let i = 0; i < this.particles.length; i++) {
+        let current = this.particles[i];
+        current.pos.x += random(-1, 1);
+        current.pos.y += random(-1, 1);
+        current.pos.z += random(-1, 1);
+      }
+      
+      if(this.timer >= 30) {this.state = 'fission'} 
+  }
+
+  }
 
   split() {
     const half = this.particles.length / 2;    
@@ -148,18 +161,7 @@ class Nucleus {
   }
 
   fission() {
-    if(this.state == 'unstable') {
-      this.timer++; 
-      for(let i = 0; i < this.particles.length; i++) {
-        let current = this.particles[i];
-        current.pos.x = current.origin.x + random(-1, 1);
-        current.pos.y = current.origin.y + random(-1, 1);
-        current.pos.z = current.origin.z + random(-1, 1);
-      }
-      
-      if(this.timer >= 30) {this.state = 'fission'} 
-  }
-
+    this.vibrate();
     if(this.state == 'fission') {
       this.split();
       this.release();
