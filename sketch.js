@@ -1,4 +1,6 @@
 // // p5.prototype.VERSION 2.1.1
+let timer = 0;
+
 
 const playBtn = document.querySelector('.play-btn');
 const pauseBtn = document.querySelector('.pause-btn');

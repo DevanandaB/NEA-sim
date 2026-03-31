@@ -63,21 +63,20 @@ class Particle {
 }
 
 class Nucleus {
-  constructor(pos, neutron, proton) {
+  constructor(pos, neutronNo, protonNo) {
     this.pos = pos;
     this.radius = 20;
-    this.neutron = neutron;
-    this.proton = proton;
+    this.neutronNo = neutronNo;
+    this.protonNo = protonNo;
     this.particles = [];
     this.state = 'stable';
     this.vel = new createVector(0, 0, 0);
     this.acc = new createVector(0, 0, 0);
-    this.timer = 0;
   }
 
   createNucleus() {
-    //protons and created first and then neutrons so not random arrangment
-    for (let i = 0; i < this.proton; i++) {
+    //protons are created first and then neutrons 
+    for (let i = 0; i < this.protonNo; i++) {
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
       let randomRadius = random(10, 20);
@@ -85,12 +84,12 @@ class Nucleus {
       let y = this.pos.y + randomRadius * sin(azimuthalAng) * sin(polarAng);
       let z = this.pos.z + randomRadius * cos(azimuthalAng);
       let position = createVector(x, y, z);
-      let proton = new Particle(position, 'red', 'proton');
+      let proton = new Particle(position, 'red');
       this.particles.push(proton);
     }
 
     //neutrons
-    for (let i = 0; i < this.neutron; i++) {
+    for (let i = 0; i < this.neutronNo; i++) {
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
       let randomRadius = random(10, 20);
@@ -101,7 +100,7 @@ class Nucleus {
       let neutron = new Particle(position, 'blue');
       this.particles.push(neutron);
   }
-  return this.particles;
+
 }
 
   displayNucleus() {
@@ -111,9 +110,17 @@ class Nucleus {
     }
   }
 
+  shuffleParticles() {
+    for (let i = this.particles.length - 1; i > 0; i++) {
+      let j = Math.floor(random(0, i + 1));
+      this.particles[i] = this.particles[j];
+      this.particles[j] = this.particles[i];
+    }
+  }
+
   vibrate() {
     if(this.state == 'unstable') {
-      this.timer++; 
+      timer++; 
       for(let i = 0; i < this.particles.length; i++) {
         let current = this.particles[i];
         current.pos.x += random(-1, 1);
@@ -121,27 +128,26 @@ class Nucleus {
         current.pos.z += random(-1, 1);
       }
       
-      if(this.timer >= 30) {this.state = 'fission'} 
+      if(timer >= 30) {this.state = 'fission'} 
   }
-
   }
 
   split() {
-    const half = this.particles.length / 2;    
+    this.shuffleParticles();
+
+    const half = floor(this.particles.length / 2);    
     let firstHalf = this.particles.slice(0, half);
     let secHalf =  this.particles.slice(half, this.particles.length);
 
     for(let i = 0; i < firstHalf.length; i++) {
       let current = firstHalf[i];
       current.vel = createVector(4, -4, 0);
-      current.acc = createVector(0, 0, 0);
       current.fire();
     }
 
     for(let i = 0; i < secHalf.length; i++) {
       let current = secHalf[i];
       current.vel = createVector(-4, 4, 0);
-      current.acc = createVector(0, 0, 0);
       current.fire();
       
     }
@@ -149,10 +155,9 @@ class Nucleus {
   }
 
   release() {
-    //120 deg
     let tempPos = this.pos;
     for(let i = 0; i < 3; i++) {
-      let angle = TWO_PI / 3 * (i + random(0, 1));
+      let angle = 360 / 3 * (i + random(0, 1));
       let neutron = new Particle(tempPos, 'blue');
       neutron.vel = createVector(0.2 * cos(angle), 0.2 * sin(angle), 0);
       neutron.acc = createVector(0, 0, 0);
