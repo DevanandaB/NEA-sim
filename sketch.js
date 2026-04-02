@@ -1,6 +1,4 @@
 // // p5.prototype.VERSION 2.1.1
-let timer = 0;
-
 
 const playBtn = document.querySelector('.play-btn');
 const pauseBtn = document.querySelector('.pause-btn');
@@ -10,17 +8,7 @@ const resetBtn = document.querySelector('.reset-btn');
 const nucleiRange = document.querySelector('#nuclei-range');
 const nucleiInput = document.querySelector('#nuclei-input');
 
-const neutronSpeedRange = document.querySelector('#speed-range');
-const neutronSpeedInput = document.querySelector('#speed-input');
 
-const isotopeRange = document.querySelector('#isotope-range');
-const isotopeInput = document.querySelector('#isotope-input');
-
-// const myChart = new Chart("myChart", {
-//     type: "area",
-//     data: {},
-//     options: {}
-//   });
 
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
@@ -30,6 +18,7 @@ function setup() {
     //to fire neutrons
     let position1 = createVector(-160, 10, 0);
     neutron1 = new Particle(position1, "blue");
+    console.log(neutron1.vel);
     
 
     let position2 = createVector(100, 0, 0);
@@ -37,10 +26,14 @@ function setup() {
 
     push();
     nucleus1.createNucleus();
+    
     pop();
     neutron1.collide(nucleus1);
 
     updateNucleiNo();
+    
+    //nucleus1.fission();
+    
     
 }
 
@@ -64,7 +57,7 @@ function draw() {
     neutronSourceDraw(0, 60);
     pop();
 
-    if(isPlaying & isFiring) {
+    if(isPlaying && isFiring) {
         push();
         neutron1.display();
         neutron1.fire();
@@ -224,10 +217,6 @@ function neutronSourceDraw(z1, z2) {
 
 
 
-
-
-
-let isPlaying = false;
 const play = () => {isPlaying = true; isFiring = true}
 playBtn.addEventListener('click', play);
 
@@ -256,9 +245,12 @@ const reset = () => {
 };
 resetBtn.addEventListener('click', reset);
 
+function pause() {
+    
 
+}
 
-pauseBtn.addEventListener('click', pause = () => {});
+pauseBtn.addEventListener('click', pause);
 
 //leave go forward last
 goForwardBtn.addEventListener('click', forward = () => {});
@@ -286,14 +278,3 @@ const updateNucleiNo = (e) => {
 nucleiRange.addEventListener('input', updateNucleiNo);
 
 
-neutronSpeedRange.addEventListener('input', update = (e) => {
-    const value = neutronSpeedRange.value;
-    neutronSpeedInput.value = value;
-
-
-});
-
-isotopeRange.addEventListener('input', update = (e) => {
-    const value = isotopeRange.value;
-    isotopeInput.value = value;
-});
