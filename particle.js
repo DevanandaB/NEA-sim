@@ -45,6 +45,9 @@ class Particle {
     isFiring = true;
   }
 
+
+   
+
   //collision detection and resolution
   //check if a neutron collides with the nucleus
   collide(nucleus) {
@@ -82,44 +85,22 @@ class Nucleus {
     this.isShuffled = false;
   }
 
-  // createNucleus() {
-  //   for (let i = 0; i < this.protonNo; i++) {
-  //     let polarAng = random(0, 360);
-  //     let azimuthalAng = random(0, 180);
-  //     //random position should be added to the nucleus position or 
-  //     //random position should be added from the centre of the nucleus
-  //     let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(polarAng);
-  //     let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(polarAng);
-  //     let z = this.pos.z + this.radius * cos(azimuthalAng);
-  //     let position = createVector(x, y, z);
-  //     let proton = new Particle(position, 'red');
-  //     this.particles.push(proton);
-  //   }
-
-  //   //neutrons
-  //   for (let i = 0; i < this.neutronNo; i++) {
-  //     let polarAng = random(0, 360);
-  //     let azimuthalAng = random(0, 180);
-  //     let x = this.pos.x + this.radius * sin(azimuthalAng) * cos(polarAng);
-  //     let y = this.pos.y + this.radius * sin(azimuthalAng) * sin(polarAng);
-  //     let z = this.pos.z + this.radius * cos(azimuthalAng);
-  //     let position = createVector(x, y, z);
-  //     let neutron = new Particle(position, 'blue');
-  //     this.particles.push(neutron);
-  // }
-  // }
-
-
-
   createNucleus() {
+    //protons
     for (let i = 0; i < this.protonNo; i++) {
+      
+      //to generate random angles within x y and z directions within nucleus rangle  
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
+
+      //random radius within nucleus range 
       let randomRadius = random(10, 20);
       let x = this.pos.x + randomRadius * sin(azimuthalAng) * cos(polarAng);
       let y = this.pos.y + randomRadius * sin(azimuthalAng) * sin(polarAng);
       let z = this.pos.z + randomRadius * cos(azimuthalAng);
       let position = createVector(x, y, z);
+
+      //creates protons and adds that to the particle array
       let proton = new Particle(position, 'red');
       this.particles.push(proton);
     }
@@ -133,6 +114,8 @@ class Nucleus {
       let y = this.pos.y + randomRadius * sin(azimuthalAng) * sin(polarAng);
       let z = this.pos.z + randomRadius * cos(azimuthalAng);
       let position = createVector(x, y, z);
+
+      //creates protons and adds that to the particle array
       let neutron = new Particle(position, 'blue');
       this.particles.push(neutron);
   }
@@ -141,13 +124,10 @@ class Nucleus {
 
   displayNucleus() {
     for(let i = 0; i < this.particles.length; i++) {
-      
-
-this.particles[i].display();
+    this.particles[i].display();
     }
-
-    
   }
+
 
   //Fisher–Yates (aka Knuth) Shuffle
   shuffleParticles() {

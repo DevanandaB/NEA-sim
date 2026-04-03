@@ -16,9 +16,9 @@ function setup() {
     angleMode(DEGREES);
 
     //to fire neutrons
+    //the position is the end section of the neutron gun
     let position1 = createVector(-160, 10, 0);
     neutron1 = new Particle(position1, "blue");
-    console.log(neutron1.vel);
     
 
     let position2 = createVector(100, 0, 0);
@@ -78,11 +78,32 @@ function draw() {
         neutrons[i].display();
         neutrons[i].fire();
     }
+
+
+    // //each neutron should check collision between nuclei in vessel
+    // for(let i = 0; i < neutrons.length; i++) {
+    //     neutrons[i].display();
+    //     neutrons[i].fire();
+        
+    //     for(let j = 0; j < nuclei.length; j++) {
+    //         push();
+    //         nuclei[j].displayNucleus();
+    //         pop();
+
+    //         if(neutrons[i].collide(nuclei[j])) {
+    //         console.log('collision!')
+    //     }
+    //     }
+
+        
+
+    // }
     
 }
 
 
-
+//parameters z1 and z2 will add two different depths
+//to the outlines
 function neutronSourceDraw(z1, z2) {
     noFill();
 
@@ -104,7 +125,6 @@ function neutronSourceDraw(z1, z2) {
     vertex(220, -150, z2);
     endShape(CLOSE);
 
-
     //ellipse to the left of the main trapezium
     push();
     translate(0, 0, z1);
@@ -125,7 +145,6 @@ function neutronSourceDraw(z1, z2) {
     vertex(300, -120, z1);
     endShape(CLOSE);
     pop();
-
     //small trapezium outline with diff depth
     beginShape();
     vertex(300, -55, z2);
@@ -174,6 +193,7 @@ function neutronSourceDraw(z1, z2) {
     pop();
     
     //depth extrusion
+
     //bottom curved shape 
     push();
     beginShape(LINES);
@@ -257,7 +277,7 @@ goForwardBtn.addEventListener('click', forward = () => {});
 
 
 
-const updateNucleiNo = (e) => {
+const updateNucleiNo = () => {
     //when the slider is changed, add/remove nucleus
     const inputValue = nucleiRange.value;
     nucleiInput.value = inputValue;
