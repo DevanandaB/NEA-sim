@@ -9,6 +9,8 @@ let nucleus1;
 
 let isFiring = false;
 let isPlaying = false;
+let isPaused = false;
+let isForward = false;
 
 
 
@@ -191,9 +193,6 @@ class Nucleus {
 }
     
 
-    
-    
-
     ////adding a floor will make sure that the number will be rounded to an int
     // const half = floor(this.particles.length / 2);  
     
@@ -239,14 +238,18 @@ class Nucleus {
   }
 
 
-
   release() {
-    //neutrons are created on the centre of nucleus  so that it fires away from the centre
+    //sets condition so that neutrons are only released once during fission
     if (this.isRelease == false) {
-        let nucleusCentre = this.pos.copy();
+      //neutrons are created on the centre of nucleus  so that it fires away from the centre
+      let nucleusCentre = this.pos.copy();
+
+    //create three neutrons to release them    
     for(let i = 0; i < 3; i++) {
       let neutron = new Particle(nucleusCentre, 'blue');
       let fixedVel = 3;
+
+      //generate random angles for them to fire
       let polarAng = random(0, 360);
       let azimuthalAng = random(0, 180);
       let x = fixedVel * sin(azimuthalAng) * cos(polarAng);
@@ -256,16 +259,20 @@ class Nucleus {
       neutron.vel =  createVector(x, y, z);
       neutrons.push(neutron);
     }
+
     this.isRelease = true;
 }
     
     
   }
 
+
+
+
   fission() {
     this.vibrate();
     if(this.state == 'fission') {
-      //this.split();
+      this.split();
       this.release();
       this.state = 'fissioned';
     }

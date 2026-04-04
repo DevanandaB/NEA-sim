@@ -9,7 +9,6 @@ const nucleiRange = document.querySelector('#nuclei-range');
 const nucleiInput = document.querySelector('#nuclei-input');
 
 
-
 function setup() {
     const canvas = createCanvas(750, 600, WEBGL);
     canvas.parent('sim-container');
@@ -28,11 +27,9 @@ function setup() {
     nucleus1.createNucleus();
     
     pop();
-    neutron1.collide(nucleus1);
 
     updateNucleiNo();
-    
-    //nucleus1.fission();
+   
     
     
 }
@@ -57,12 +54,22 @@ function draw() {
     neutronSourceDraw(0, 60);
     pop();
 
-    if(isPlaying && isFiring) {
+    // if(isPlaying && isFiring) {
+    //     push();
+    //     neutron1.display();
+    //     neutron1.fire();
+    //     neutron1.collide(nucleus1);
+    //     pop();
+    // }
+
+    if(isPlaying && (isFiring && (!isPaused || isForward))) {
         push();
         neutron1.display();
         neutron1.fire();
         neutron1.collide(nucleus1);
         pop();
+
+        isForward = false;
     }
 
     nucleus1.displayNucleus();
@@ -94,9 +101,6 @@ function draw() {
     //         console.log('collision!')
     //     }
     //     }
-
-        
-
     // }
     
 }
@@ -266,14 +270,18 @@ const reset = () => {
 resetBtn.addEventListener('click', reset);
 
 function pause() {
-    
+    isPaused = !isPaused;
 
 }
 
 pauseBtn.addEventListener('click', pause);
 
-//leave go forward last
-goForwardBtn.addEventListener('click', forward = () => {});
+
+goForwardBtn.addEventListener('click', forward = () => {
+    if (isPaused) {
+        isForward = true;
+    }
+});
 
 
 
@@ -281,8 +289,10 @@ const updateNucleiNo = () => {
     //when the slider is changed, add/remove nucleus
     const inputValue = nucleiRange.value;
     nucleiInput.value = inputValue;
+
     //clears array 
     nuclei = [];
+
     //create nucleus upto input value only
     for(let i = 0; i < inputValue - 1; i++) {
         let randomX = random(-120, 330);
