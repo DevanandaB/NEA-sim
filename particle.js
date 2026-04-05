@@ -268,17 +268,20 @@ class Nucleus {
 
 
 
-
   fission() {
+    //unstable nuclei vibrates
     this.vibrate();
+
+    //after vibration, fission state is reached so that
+    //the nuclei can split and release neutrons
+
     if(this.state == 'fission') {
       this.split();
       this.release();
-      this.state = 'fissioned';
-    }
 
-      
-      
+      //changes state for chain reaction
+      this.state = 'fissioned';
+    }  
   }
 
 

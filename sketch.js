@@ -3,6 +3,8 @@
 const playBtn = document.querySelector('.play-btn');
 const pauseBtn = document.querySelector('.pause-btn');
 const goForwardBtn = document.querySelector('.forward-btn');
+
+
 const resetBtn = document.querySelector('.reset-btn');
 
 const nucleiRange = document.querySelector('#nuclei-range');
@@ -62,6 +64,7 @@ function draw() {
     //     pop();
     // }
 
+    //conditions to allow the simulation to play, pause and go forward
     if(isPlaying && (isFiring && (!isPaused || isForward))) {
         push();
         neutron1.display();
@@ -69,7 +72,18 @@ function draw() {
         neutron1.collide(nucleus1);
         pop();
 
+        //looping through the released neutrons array 
+        //to fire them after fission
+        for(let i = 0; i < neutrons.length; i++) {
+        neutrons[i].display();
+        neutrons[i].fire();
+    }
+
+        //flips to false so that the process only moves
+        //a single step
         isForward = false;
+
+
     }
 
     nucleus1.displayNucleus();
@@ -80,12 +94,6 @@ function draw() {
       nuclei[i].displayNucleus();
       pop();
     }
-
-    for(let i = 0; i < neutrons.length; i++) {
-        neutrons[i].display();
-        neutrons[i].fire();
-    }
-
 
     // //each neutron should check collision between nuclei in vessel
     // for(let i = 0; i < neutrons.length; i++) {
